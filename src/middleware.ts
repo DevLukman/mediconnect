@@ -21,11 +21,14 @@ export async function middleware(request: NextRequest) {
   let session: Session | undefined;
 
   try {
-    const res = await fetch("/api/auth/get-session", {
-      headers: { cookie: request.headers.get("cookie") || "" },
-      signal: AbortSignal.timeout(1000),
-      cache: "no-store",
-    });
+    const res = await fetch(
+      new URL("/api/auth/get-session", request.url).toString(),
+      {
+        headers: { cookie: request.headers.get("cookie") || "" },
+        signal: AbortSignal.timeout(1000),
+        cache: "no-store",
+      }
+    );
     if (res.ok) {
       const { data } = (await res.json()) as { data: Session };
       session = data;
@@ -90,9 +93,3 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };
-
-// If you later add segments (e.g., /resetpassword/[token]), exact matching will block access. Consider startsWith for these.
-
-// -  const publicRoutes = ["/login", "/signup", "/forgetpassword", "/resetpassword"];
-// +  const publicRoutes = ["/login", "/signup", "/forgetpassword", "/resetpassword"];
-// +  const isPublic = publicRoutes.some((r) => pathname === r || pathname.startsWith(`${r}/`));

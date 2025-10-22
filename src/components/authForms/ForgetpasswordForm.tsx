@@ -21,10 +21,14 @@ export default function ForgetPasswordForm() {
 
     try {
       const result = await ForgetPassword(payload);
-      toast.success(result.message);
+      if (result.success) {
+        toast.success(result.message);
+      } else {
+        toast.error(result.message, { className: "bg-red-500" });
+      }
     } catch (error) {
       const msg = error instanceof Error ? error.message : "There was an error";
-      toast.error(msg, { className: "bg-red-500" });
+      toast.error(msg);
     }
   }
   return (

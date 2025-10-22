@@ -23,7 +23,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={` ${inter.variable} font-inter antialiased`}>
         {children}
-        <Toaster />
+        <Toaster position="bottom-right" richColors />
       </body>
     </html>
   );
