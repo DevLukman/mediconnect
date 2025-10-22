@@ -75,7 +75,7 @@ export const doctorStepTwoSchema = z.object({
     .min(0, "Years of experience must be 0 or greater")
     .max(30, "we don't accept experience more than 30"),
   bio: z.string().min(10, "Bio must be at least 10 characters"),
-  price: z.number().min(10, "Price must be positive"),
+  price: z.number().min(10, "Price must at least 10"),
   startTime: z.string(),
   endTime: z.string(),
 });

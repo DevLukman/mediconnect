@@ -64,10 +64,10 @@ export default function SignupForm() {
     startTransition(async () => {
       const result = await signUp(payload);
       if (result.success) {
-        toast(result.message);
+        toast.success(result.message);
         router.push("/");
       } else {
-        toast(result.message);
+        toast.error(result.message);
       }
     });
   }
