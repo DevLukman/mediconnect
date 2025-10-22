@@ -17,7 +17,7 @@ import {
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
 
-import { composeTailwindRenderProps, focusStyles } from "./Primitive";
+import { cn, composeTailwindRenderProps } from "./Primitive";
 
 interface FieldProps {
   label?: string;
@@ -47,7 +47,7 @@ const Label = ({ className, ...props }: LabelProps) => {
 
 interface DescriptionProps extends TextProps {
   isWarning?: boolean;
-  ref?: React.RefObject<HTMLElement>;
+  ref?: React.Ref<HTMLElement>;
 }
 
 const Description = ({ ref, className, ...props }: DescriptionProps) => {
@@ -58,14 +58,14 @@ const Description = ({ ref, className, ...props }: DescriptionProps) => {
       {...props}
       slot="description"
       className={description({
-        className: isWarning ? "text-warning" : className,
+        className: isWarning ? cn("text-destructive", className) : className,
       })}
     />
   );
 };
 
 interface FieldErrorProps extends FieldErrorPrimitiveProps {
-  ref?: React.RefObject<HTMLElement>;
+  ref?: React.Ref<HTMLElement>;
 }
 const FieldError = ({ className, ref, ...props }: FieldErrorProps) => {
   return (
@@ -102,7 +102,7 @@ const FieldGroup = ({ className, ...props }: GroupProps) => {
 };
 
 interface InputProps extends InputPrimitiveProps {
-  ref?: React.RefObject<HTMLInputElement>;
+  ref?: React.Ref<HTMLInputElement>;
 }
 const Input = ({ className, ref, ...props }: InputProps) => {
   return (

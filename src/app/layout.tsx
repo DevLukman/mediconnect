@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
+import { Toaster } from "sonner";
 import "./globals.css";
 const inter = Roboto({
   subsets: ["latin"],
@@ -22,6 +23,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={` ${inter.variable} font-inter antialiased`}>
         {children}
+        <Toaster />
       </body>
     </html>
   );

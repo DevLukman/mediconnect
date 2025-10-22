@@ -7,7 +7,7 @@ import { composeRenderProps } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
-const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
+const cn = (...inputs: ClassValue[]) => twMerge(clsx(...inputs));
 
 const composeTailwindRenderProps = <T,>(
   className: string | ((v: T) => string) | undefined,
@@ -24,19 +24,7 @@ const focusRing = tv({
   },
 });
 
-const isServerSide = (): boolean => {
-  if (typeof window !== "undefined") {
-    return false;
-  }
-  if (
-    typeof process !== "undefined" &&
-    process.versions &&
-    process.versions.node
-  ) {
-    return true;
-  }
-  return true;
-};
+const isServerSide = (): boolean => typeof window === "undefined";
 
 const isIos = (userAgent?: string): boolean => {
   if (isServerSide() && !userAgent) return false;

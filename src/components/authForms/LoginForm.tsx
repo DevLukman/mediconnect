@@ -20,15 +20,16 @@ import {
   FieldLabel,
   FieldSet,
 } from "@/components/ui/field";
+import { Login } from "@/lib/action/authAction";
 import { LoginSchema, TLoginSchema } from "@/lib/types";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { Input } from "../ui/input";
-import Link from "next/link";
-import { Login } from "@/lib/action/authAction";
-import { useRouter } from "next/navigation";
 import { Spinner } from "../ui/spinner";
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -47,10 +48,10 @@ export default function LoginForm() {
   async function handleLogin(data: TLoginSchema) {
     const result = await Login(data);
     if (result.success) {
-      alert(result.message);
+      toast.success(result.message);
       router.push("/");
     } else {
-      alert(result.message);
+      toast.error(result.message);
     }
   }
   return (

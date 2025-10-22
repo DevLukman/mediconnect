@@ -11,15 +11,16 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { ResetPassword } from "@/lib/action/authAction";
 import { ResetPasswordSchema, TResetPasswordSchema } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { FieldGroup } from "../ui/field";
-import { ResetPassword } from "@/lib/action/authAction";
-import { useRouter, useSearchParams } from "next/navigation";
 import { Spinner } from "../ui/spinner";
 
 export default function ResetPasswordForm() {
@@ -38,10 +39,10 @@ export default function ResetPasswordForm() {
   async function handleResetPassword(data: TResetPasswordSchema) {
     const result = await ResetPassword(data.password, token);
     if (result?.success) {
-      alert(result.message);
+      toast.success(result.message);
       router.push("/login");
     } else {
-      alert(result.message);
+      toast.error(result.message);
     }
   }
 

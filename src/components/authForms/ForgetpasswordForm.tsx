@@ -4,6 +4,7 @@ import { ForgetPassword } from "@/lib/action/authAction";
 import { ForgetPasswordSchema, TForgetPasswordSchema } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Spinner } from "../ui/spinner";
@@ -16,18 +17,29 @@ export default function ForgetPasswordForm() {
     resolver: zodResolver(ForgetPasswordSchema),
   });
   async function handleForgetPassword(data: TForgetPasswordSchema) {
-    const result = await ForgetPassword(data);
-    if (result.success) {
-      alert(result.message);
-    } else {
-      alert(result.message);
+    const payload = { email: data.email.trim().toLowerCase() };
+
+    try {
+      const result = await ForgetPassword(payload);
+      toast.success(result.message);
+    } catch (error) {
+      const msg = error instanceof Error ? error.message : "There was an error";
+      toast.error(msg, { className: "bg-red-500" });
     }
   }
   return (
     <form onSubmit={handleSubmit(handleForgetPassword)} className="mt-6">
       <Field>
         <FieldLabel htmlFor="email">Email address</FieldLabel>
-        <Input id="email" type="email" {...register("email")} />
+        <Input
+          id="email"
+          type="email"
+          autoComplete="email"
+          inputMode="email"
+          aria-invalid={Boolean(errors.email)}
+          aria-describedby={errors.email ? "email-error" : undefined}
+          {...register("email")}
+        />
         {errors.email?.message && (
           <FieldError className="pl-1 text-sm text-destructive">
             {errors.email.message}

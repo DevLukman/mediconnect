@@ -1,11 +1,10 @@
+import SignupForm from "@/components/authForms/SignupForm";
+import Logo from "@/components/Logo";
 import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Mediconnect | Sign up",
   description: "Connecting You to Quality Healthcare",
 };
-
-import SignupForm from "@/components/authForms/SignupForm";
-import Logo from "@/components/Logo";
 
 export default function Page() {
   return (

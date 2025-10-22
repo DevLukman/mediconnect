@@ -13,9 +13,9 @@ export default function Page() {
       <div className="mx-auto w-full max-w-[400px]">
         <Logo />
         <div className="mt-4">
-          <h1 className="font-IBM font-bold">
+          <h2 className="font-IBM font-bold">
             Enter your new password to complete the reset
-          </h1>
+          </h2>
         </div>
         <ResetPasswordForm />
       </div>

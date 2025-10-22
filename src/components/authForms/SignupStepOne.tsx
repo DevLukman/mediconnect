@@ -26,6 +26,7 @@ import {
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import {
   Select,
   SelectContent,
@@ -35,7 +36,6 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Spinner } from "../ui/spinner";
-import { Label } from "../ui/label";
 
 interface StepOneProps {
   onComplete: (data: StepOneFormData) => void;
@@ -73,7 +73,12 @@ export default function StepOneForm({ onComplete }: StepOneProps) {
           <FieldGroup>
             <Field className="gap-1.5">
               <FieldLabel htmlFor="email">Email address</FieldLabel>
-              <Input id="email" type="email" {...register("email")} />
+              <Input
+                id="email"
+                type="email"
+                autoComplete="email"
+                {...register("email")}
+              />
               {errors.email?.message && (
                 <FieldError className="pl-1 text-sm text-destructive">
                   {errors.email.message}
@@ -88,6 +93,7 @@ export default function StepOneForm({ onComplete }: StepOneProps) {
                 <InputGroupInput
                   id="password"
                   type={showPassword ? "text" : "password"}
+                  autoComplete="new-password"
                   {...register("password")}
                 />
                 <InputGroupAddon align="inline-end">
@@ -109,7 +115,7 @@ export default function StepOneForm({ onComplete }: StepOneProps) {
                       </InputGroupButton>
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>{showPassword ? "Hid password" : "Show password"}</p>
+                      <p>{showPassword ? "Hide password" : "Show password"}</p>
                     </TooltipContent>
                   </Tooltip>
                 </InputGroupAddon>
