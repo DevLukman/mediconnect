@@ -8,11 +8,12 @@ import {
 import { signUp } from "@/lib/action/authAction";
 import { ArrowBigRight, Check } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
+import { toast } from "sonner";
 import DoctorStepTwo from "./DoctorStepTwo";
 import PatientStepTwo from "./PatientStepTwo";
 import StepOneForm from "./SignupStepOne";
-import { useRouter } from "next/navigation";
 
 export default function SignupForm() {
   const [currentStep, setCurrentStep] = useState<1 | 2>(1);
@@ -30,7 +31,7 @@ export default function SignupForm() {
       ...patientData,
     };
 
-    const main = {
+    const payload = {
       name: data.name!,
       email: data.email!,
       password: data.password!,
@@ -38,12 +39,12 @@ export default function SignupForm() {
     };
 
     startTransition(async () => {
-      const result = await signUp(main);
+      const result = await signUp(payload);
       if (result.success) {
-        alert(result.message);
+        toast.success(result.message);
         router.push("/");
       } else {
-        alert(result.message);
+        toast.error(result.message);
       }
     });
   }
@@ -53,7 +54,7 @@ export default function SignupForm() {
       ...stepOneData,
       ...doctorData,
     };
-    const main = {
+    const payload = {
       name: data.name!,
       email: data.email!,
       password: data.password!,
@@ -61,12 +62,12 @@ export default function SignupForm() {
     };
 
     startTransition(async () => {
-      const result = await signUp(main);
+      const result = await signUp(payload);
       if (result.success) {
-        alert(result.message);
+        toast(result.message);
         router.push("/");
       } else {
-        alert(result.message);
+        toast(result.message);
       }
     });
   }

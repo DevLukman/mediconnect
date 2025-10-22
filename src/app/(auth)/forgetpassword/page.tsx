@@ -14,14 +14,14 @@ export default function Page() {
       <div className="mx-auto w-full max-w-[400px]">
         <Logo />
         <div className="mt-4">
-          <h1 className="font-IBM font-bold text-xl">
+          <h2 className="font-IBM font-bold text-xl">
             Enter your email to reset your password
-          </h1>
+          </h2>
         </div>
         <ForgetPasswordForm />
         <div className="flex flex-col items-center justify-center mt-4 gap-2">
           <p className="flex items-center gap-2 text-sm ">
-            <span> Rememeber your password?</span>
+            <span> Remember your password?</span>
             <Link href={"/login"} className="text-primary underline">
               Login
             </Link>

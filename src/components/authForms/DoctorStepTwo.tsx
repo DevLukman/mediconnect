@@ -22,7 +22,6 @@ import {
 } from "../ui/select";
 import { Spinner } from "../ui/spinner";
 import { Textarea } from "../ui/textarea";
-import { Label } from "@/components/ui/label";
 
 interface DoctorStepTwoProps {
   onComplete: (data: DoctorStepTwoFormData) => void;
@@ -59,7 +58,7 @@ export default function DoctorStepTwo({
       <FieldSet className="flex flex-col gap-3">
         <FieldGroup>
           <Field className="gap-1.5">
-            <Label htmlFor="specialization">Specialization</Label>
+            <FieldLabel htmlFor="specialization">Specialization</FieldLabel>
             <Controller
               name="specialization"
               control={control}
@@ -136,7 +135,7 @@ export default function DoctorStepTwo({
               render={({ field }) => (
                 <NumberField
                   id="price"
-                  minValue={1}
+                  minValue={10}
                   label="Consultation Fee"
                   isDisabled={isSubmitting}
                   value={field.value ?? 0}
@@ -196,7 +195,7 @@ export default function DoctorStepTwo({
         <FieldGroup>
           <Field className="gap-1.5">
             <FieldLabel htmlFor="bio">About</FieldLabel>
-            <Textarea id="bio" {...register("bio")} />
+            <Textarea id="bio" {...register("bio")} disabled={isSubmitting} />
             {errors.bio?.message && (
               <FieldError className="pl-1 text-sm text-destructive">
                 {errors.bio.message}

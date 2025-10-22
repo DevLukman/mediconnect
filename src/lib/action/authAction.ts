@@ -12,7 +12,9 @@ import {
 
 export async function Login(data: TLoginSchema) {
   const validation = LoginSchema.safeParse(data);
-  if (!validation.success) throw new Error("Not a valid Information");
+  if (!validation.success) {
+    return { success: false, message: "Invalid credentials payload" };
+  }
 
   try {
     await auth.api.signInEmail({
@@ -20,7 +22,7 @@ export async function Login(data: TLoginSchema) {
         ...validation.data,
       },
     });
-    return { success: true, message: "Login successfully" };
+    return { success: true, message: "Login successful" };
   } catch (error) {
     const e = error as Error;
     return {
@@ -32,7 +34,9 @@ export async function Login(data: TLoginSchema) {
 
 export async function signUp(data: TSignUpSchema) {
   const validation = SignupSchema.safeParse(data);
-  if (!validation.success) throw new Error("Not a valid information");
+  if (!validation.success) {
+    return { success: false, message: "Invalid credentials" };
+  }
   try {
     await auth.api.signUpEmail({
       body: {
@@ -61,7 +65,9 @@ export async function logout() {
 
 export async function ForgetPassword(data: TForgetPasswordSchema) {
   const validation = ForgetPasswordSchema.safeParse(data);
-  if (!validation.success) throw new Error("Not a valid email");
+  if (!validation.success) {
+    return { success: false, message: "Invalid email" };
+  }
 
   try {
     await auth.api.forgetPassword({
@@ -85,9 +91,12 @@ export async function ResetPassword(newPassword: string, token: string) {
         token,
       },
     });
-    return { success: true, message: "Password reset successfully" };
+    return { success: true, message: "Password reset successful" };
   } catch (error) {
     const e = error as Error;
-    return { success: false, message: e || "Password reset not successful" };
+    return {
+      success: false,
+      message: e.message || "Password reset not successful",
+    };
   }
 }
