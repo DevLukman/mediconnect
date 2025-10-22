@@ -21,6 +21,7 @@ export const SignupSchema = z.object({
   name: z.string().min(1, "Name is required").max(50),
   email: z.email("Invalid email format").max(50),
   password: z.string().min(8, "Password must be at least 8 characters").max(20),
+  role: z.enum(["PATIENT", "DOCTOR", "ADMIN"], "Please select a role"),
 });
 
 export type TSignUpSchema = z.infer<typeof SignupSchema>;
