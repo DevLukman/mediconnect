@@ -9,6 +9,8 @@ import {
   TLoginSchema,
   TSignUpSchema,
 } from "../types";
+import { getUserSession } from "./getSession";
+import { db } from "../prisma";
 
 export async function Login(data: TLoginSchema) {
   const validation = LoginSchema.safeParse(data);
@@ -32,7 +34,7 @@ export async function Login(data: TLoginSchema) {
   }
 }
 
-export async function signUp(data: TSignUpSchema) {
+export async function Signup(data: TSignUpSchema) {
   const validation = SignupSchema.safeParse(data);
   if (!validation.success) {
     return { success: false, message: "Invalid credentials" };
@@ -53,7 +55,7 @@ export async function signUp(data: TSignUpSchema) {
   }
 }
 
-export async function logout() {
+export async function Logout() {
   try {
     await auth.api.signOut({ headers: await headers() });
     return { success: true, message: "Log out successful" };
@@ -97,6 +99,25 @@ export async function ResetPassword(newPassword: string, token: string) {
     return {
       success: false,
       message: e.message || "Password reset not successful",
+    };
+  }
+}
+
+export async function DeleteUser() {
+  const session = await getUserSession();
+  if (!session) {
+    return { success: false, message: "Invalid user" };
+  }
+  try {
+    await db.user.delete({
+      where: { id: session.user.id },
+    });
+    return { success: true, message: "Password reset successful" };
+  } catch (error) {
+    const e = error as Error;
+    return {
+      success: false,
+      message: e.message || "Error with deleting account",
     };
   }
 }

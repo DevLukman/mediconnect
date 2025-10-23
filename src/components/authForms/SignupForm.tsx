@@ -5,7 +5,7 @@ import {
   StepOneFormData,
 } from "@/lib/types";
 
-import { signUp } from "@/lib/action/authAction";
+import { Signup } from "@/lib/action/authAction";
 import { ArrowBigRight, Check } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -39,7 +39,7 @@ export default function SignupForm() {
     };
 
     startTransition(async () => {
-      const result = await signUp(payload);
+      const result = await Signup(payload);
       if (result.success) {
         toast.success(result.message);
         router.push("/");
@@ -62,7 +62,7 @@ export default function SignupForm() {
     };
 
     startTransition(async () => {
-      const result = await signUp(payload);
+      const result = await Signup(payload);
       if (result.success) {
         toast.success(result.message);
         router.push("/");
