@@ -1,44 +1,45 @@
 import { auth } from "@/lib/auth";
+import { betterFetch } from "@better-fetch/fetch";
 import { NextRequest, NextResponse } from "next/server";
+
 type UserRole = "ADMIN" | "PATIENT" | "DOCTOR";
 type Session = typeof auth.$Infer.Session;
+
 const roleRoutes: Record<UserRole, string> = {
   ADMIN: "/admin",
   PATIENT: "/patient",
   DOCTOR: "/doctor",
 };
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  const publicRoutes = [
-    "/login",
-    "/signup",
-    "/forgetpassword",
-    "/resetpassword",
-  ];
+  const publicRoutes = ["/login", "/signup", "/forgetpassword"];
+  // Check if it's a reset password route (including dynamic token routes)
+  const isResetPasswordRoute =
+    pathname === "/resetpassword" || pathname.startsWith("/resetpassword/");
 
-  const isResetPasswordWithToken = pathname.startsWith("/resetpassword/");
-  let session: Session | undefined;
-
-  try {
-    const res = await fetch(
-      new URL("/api/auth/get-session", request.url).toString(),
-      {
-        headers: { cookie: request.headers.get("cookie") || "" },
-        signal: AbortSignal.timeout(1000),
-        cache: "no-store",
-      }
-    );
-    if (res.ok) {
-      const { data } = (await res.json()) as { data: Session };
-      session = data;
+  // Get session for all routes
+  const { data: session, error } = await betterFetch<Session>(
+    "/api/auth/get-session",
+    {
+      baseURL: request.nextUrl.origin,
+      headers: {
+        cookie: request.headers.get("cookie") || "",
+      },
     }
-  } catch (error) {
-    session = undefined;
-    console.log(error);
+  );
+  // If session fetch fails, treat as unauthenticated
+  if (error && !publicRoutes.includes(pathname) && !isResetPasswordRoute) {
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  //denies user access to to public route if they are logged in
+  // Allow reset password routes regardless of auth status
+  if (isResetPasswordRoute) {
+    return NextResponse.next();
+  }
+
+  // If user is logged in and trying to access public auth pages, redirect to their dashboard
   if (publicRoutes.includes(pathname) && session?.user) {
     const userRole = session.user.role as UserRole;
     const userDashboard = roleRoutes[userRole];
@@ -47,16 +48,12 @@ export async function middleware(request: NextRequest) {
     );
   }
 
-  //allow user to have access to the public routes if they don't have a session
+  // If trying to access public routes and not logged in, allow
   if (publicRoutes.includes(pathname)) {
     return NextResponse.next();
   }
 
-  //for user that want to reset password.
-  if (isResetPasswordWithToken) {
-    return NextResponse.next();
-  }
-
+  // Protected routes
   if (!session?.user) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
@@ -67,7 +64,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  //Role base access
+  // Role based access control
   for (const [role, basePath] of Object.entries(roleRoutes)) {
     if (pathname.startsWith(basePath)) {
       if (userRole !== role) {
