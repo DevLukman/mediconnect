@@ -40,14 +40,18 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Notification } from "./Notification";
 import { Spinner } from "./ui/spinner";
+import { useTheme } from "next-themes";
 
 export function NavUser({ username }: { username: string | null }) {
   const router = useRouter();
-  const pathname = usePathname().split("/")[1];
+  const pathname = usePathname().split("/")[1] as string;
   const { isMobile } = useSidebar();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const { theme, setTheme } = useTheme();
+  const handleToggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
   async function handleLogout() {
     const result = await Logout();
     if (result.success) {
@@ -149,7 +153,10 @@ export function NavUser({ username }: { username: string | null }) {
                     </DropdownMenuItem>
                   </Link>
                   <Link href={"/"} className="flex items-center gap-2">
-                    <DropdownMenuItem className="focus:bg-primary w-full cursor-pointer focus:text-secondary">
+                    <DropdownMenuItem
+                      className="focus:bg-primary w-full
+                      cursor-pointer focus:text-secondary"
+                    >
                       <Headset />
                       <span>Customer support</span>
                     </DropdownMenuItem>
@@ -159,7 +166,10 @@ export function NavUser({ username }: { username: string | null }) {
                 <DropdownMenuSeparator />
 
                 <DropdownMenuGroup>
-                  <DropdownMenuItem className="focus:bg-primary cursor-pointer focus:text-secondary">
+                  <DropdownMenuItem
+                    className="focus:bg-primary cursor-pointer focus:text-secondary"
+                    onClick={handleToggleTheme}
+                  >
                     <Moon />
                     Toggle Theme
                   </DropdownMenuItem>
