@@ -107,7 +107,7 @@ export async function ResetPassword(newPassword: string, token: string) {
 export async function DeleteUser() {
   const session = await getUserSession();
   if (!session) {
-    return { success: false, message: "Unauthorised" };
+    return { success: false, message: "Unauthorized" };
   }
   try {
     await db.user.delete({

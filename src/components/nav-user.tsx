@@ -112,7 +112,9 @@ export function NavUser({ username }: { username: string | null }) {
                   className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
                   <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                    <AvatarFallback className="rounded-lg">
+                      {(username?.slice(0, 2) ?? "CN").toUpperCase()}
+                    </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-medium">{username}</span>
@@ -122,7 +124,7 @@ export function NavUser({ username }: { username: string | null }) {
               </DropdownMenuTrigger>
 
               <DropdownMenuContent
-                className="w-(--radix-dropdown-menu-trigger-width) min-w-56 mx-2 rounded-lg"
+                className="w-[--radix-dropdown-menu-trigger-width] min-w-56 mx-2 rounded-lg"
                 side={isMobile ? "bottom" : "top"}
                 align="end"
                 sideOffset={4}

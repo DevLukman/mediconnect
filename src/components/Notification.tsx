@@ -16,7 +16,6 @@ export function Notification() {
       <SheetTrigger asChild>
         <Button variant="ghost" aria-label="Open notifications">
           <Bell aria-hidden="true" />
-          <span className="sr-only">Open notifications</span>
         </Button>
       </SheetTrigger>
       <SheetContent>

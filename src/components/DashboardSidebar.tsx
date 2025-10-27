@@ -22,16 +22,16 @@ export function DashboardSidebar({
   ...props
 }: DashboardSidebarProps) {
   return (
-    <Sidebar collapsible="icon" {...props} className="bg-red-500">
+    <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="py-6">
         <DashboardLogo />
       </SidebarHeader>
       <Separator />
-      <SidebarContent className="">
+      <SidebarContent>
         <DoctorNav />
       </SidebarContent>
-      <SidebarFooter className="">
-        <NavUser username={username || null} />
+      <SidebarFooter>
+        <NavUser username={username} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

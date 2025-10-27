@@ -1,11 +1,11 @@
 import LoginForm from "@/components/authForms/LoginForm";
 import Logo from "@/components/Logo";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
 export const metadata: Metadata = {
   title: "Mediconnect | Login",
   description:
-    "Login in to your MediConnect account to book appointments, view your medical records, and manage your healthcare.",
+    "Log in to your MediConnect account to book appointments, view your medical records, and manage your healthcare.",
 };
 
 export default function Page() {

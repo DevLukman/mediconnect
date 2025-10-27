@@ -56,7 +56,7 @@ export const PATIENTLINKS: NavLinks = [
     url: "/patient/settings",
     icon: Settings,
   },
-];
+] as const;
 
 export const ROLE_ROUTES = {
   patient: "/patient/dashboard",

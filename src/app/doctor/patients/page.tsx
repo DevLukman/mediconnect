@@ -1,13 +1,8 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Mediconnect | Patients",
-  description: "view patient information",
-  robots: {
-    index: false,
-    follow: false,
-    noarchive: true,
-  },
+  description: "View patient information",
 };
 
 export default function Page() {

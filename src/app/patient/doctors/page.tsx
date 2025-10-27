@@ -1,13 +1,9 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Mediconnect | Doctors",
-  description: " view patient doctor information",
-  robots: {
-    index: false,
-    follow: false,
-    noarchive: true,
-  },
+  description:
+    "View and browse verified doctors, check their specializations, and book appointments.",
 };
 export default function Page() {
   return <h1>Doctors</h1>;

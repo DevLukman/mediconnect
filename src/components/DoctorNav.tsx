@@ -23,7 +23,7 @@ export function DoctorNav() {
               href={item.url as DoctorRoute}
               className={cn(
                 `rounded-lg ${
-                  pathname === item.url
+                  pathname.startsWith(item.url)
                     ? "bg-primary text-secondary"
                     : "hover:bg-secondary"
                 } transition-all ease-in-out py-1`

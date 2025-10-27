@@ -1,6 +1,6 @@
 import ResetPasswordForm from "@/components/authForms/ResetPasswordForm";
 import Logo from "@/components/Logo";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Mediconnect | ResetPassword",

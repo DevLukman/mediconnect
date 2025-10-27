@@ -2,17 +2,12 @@ import { DashboardSidebar } from "@/components/DashboardSidebar";
 import DashboardHeader from "@/components/DashboardHeader";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { getUserSession } from "@/lib/action/getSession";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
-export const doctorDashboardMetadata: Metadata = {
+export const metadata: Metadata = {
   title: "Doctor",
   description:
     "Manage your appointments, view patient information, and update your availability.",
-  robots: {
-    index: false,
-    follow: false,
-    noarchive: true,
-  },
 };
 
 export default async function RootLayout({
