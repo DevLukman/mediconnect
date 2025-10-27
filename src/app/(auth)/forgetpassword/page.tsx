@@ -5,27 +5,8 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Mediconnect | ForgetPassword",
-  description: "Connecting You to Quality Healthcare",
-  keywords: ["healthcare", "medic", "specialists", "healthTech"],
-  openGraph: {
-    title: "Mediconnect | ForgetPassword",
-    description: "Connecting You to Quality Healthcare",
-    siteName: "Mediconnect",
-    locale: "en_US",
-    type: "website",
-  },
-  robots: {
-    index: true,
-    follow: true,
-    nocache: false,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-snippet": -1,
-      "max-image-preview": "large",
-      "max-video-preview": -1,
-    },
-  },
+  description:
+    "Reset your MediConnect password. Enter your email address and we'll send you instructions to create a new password.",
 };
 
 export default function Page() {

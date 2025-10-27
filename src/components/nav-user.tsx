@@ -1,14 +1,14 @@
 "use client";
 import {
-  ChevronsUpDown,
-  Headset,
-  HouseHeart,
-  LogOut,
-  Moon,
-  Trash,
-  UserRoundPen,
-} from "lucide-react";
-
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -24,16 +24,30 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import Link from "next/link";
-import { Notification } from "./Notification";
-import { usePathname, useRouter } from "next/navigation";
 import { DeleteUser, Logout } from "@/lib/action/authAction";
+import {
+  ChevronsUpDown,
+  Headset,
+  HouseHeart,
+  LogOut,
+  Moon,
+  Trash,
+  UserRoundPen,
+} from "lucide-react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 import { toast } from "sonner";
+import { Notification } from "./Notification";
+import { Spinner } from "./ui/spinner";
 
 export function NavUser({ username }: { username: string | null }) {
   const router = useRouter();
   const pathname = usePathname().split("/")[1];
   const { isMobile } = useSidebar();
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   async function handleLogout() {
     const result = await Logout();
     if (result.success) {
@@ -43,94 +57,136 @@ export function NavUser({ username }: { username: string | null }) {
       toast.error(result.message);
     }
   }
+
   async function handleDeleteAccount() {
-    const result = await DeleteUser();
-    if (result.success) {
-      toast.success(result.message);
-      router.push("/signup");
-    } else {
-      toast.error(result.message);
+    try {
+      setLoading(true);
+      const result = await DeleteUser();
+      if (result.success) {
+        toast.success(result.message);
+        router.push("/signup");
+      } else {
+        toast.error(result.message);
+      }
+    } catch (err) {
+      const e = err as Error;
+      toast.error(
+        e.message || "Something went wrong while deleting your account."
+      );
+    } finally {
+      setLoading(false);
+      setOpen(false);
     }
   }
+
   return (
-    <div className="flex items-center">
-      <SidebarMenu>
-        <SidebarMenuItem>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <SidebarMenuButton
-                size="lg"
-                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-              >
-                <Avatar className="h-8 w-8 rounded-lg">
-                  {/* <AvatarImage src={user.avatar} alt={user.name} /> */}
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
-                </Avatar>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{username}</span>
-                </div>
-                <ChevronsUpDown className="ml-auto size-4" />
-              </SidebarMenuButton>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              className="w-(--radix-dropdown-menu-trigger-width) min-w-56 mx-2 rounded-lg"
-              side={isMobile ? "bottom" : "top"}
-              align="end"
-              sideOffset={4}
+    <>
+      <AlertDialog open={open} onOpenChange={setOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete your
+              account and remove your data from our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={loading}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteAccount}
+              disabled={loading}
+              className="flex items-center  justify-center"
             >
-              <DropdownMenuGroup>
-                <Link
-                  href={`/${pathname}/dashboard`}
-                  className="flex items-center gap-2"
+              {loading ? <Spinner /> : "Continue"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+      <div className="flex items-center">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton
+                  size="lg"
+                  className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
-                  <DropdownMenuItem className="focus:bg-primary w-full cursor-pointer focus:text-secondary">
-                    <HouseHeart />
-                    <span>Home</span>
+                  <Avatar className="h-8 w-8 rounded-lg">
+                    <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  </Avatar>
+                  <div className="grid flex-1 text-left text-sm leading-tight">
+                    <span className="truncate font-medium">{username}</span>
+                  </div>
+                  <ChevronsUpDown className="ml-auto size-4" />
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent
+                className="w-(--radix-dropdown-menu-trigger-width) min-w-56 mx-2 rounded-lg"
+                side={isMobile ? "bottom" : "top"}
+                align="end"
+                sideOffset={4}
+              >
+                <DropdownMenuGroup>
+                  <Link
+                    href={`/${pathname}/dashboard`}
+                    className="flex items-center gap-2"
+                  >
+                    <DropdownMenuItem className="focus:bg-primary w-full cursor-pointer focus:text-secondary">
+                      <HouseHeart />
+                      <span>Home</span>
+                    </DropdownMenuItem>
+                  </Link>
+                  <Link
+                    href={`/${pathname}/settings`}
+                    className="flex items-center gap-2"
+                  >
+                    <DropdownMenuItem className="focus:bg-primary w-full cursor-pointer focus:text-secondary">
+                      <UserRoundPen />
+                      <span>Profile</span>
+                    </DropdownMenuItem>
+                  </Link>
+                  <Link href={"/"} className="flex items-center gap-2">
+                    <DropdownMenuItem className="focus:bg-primary w-full cursor-pointer focus:text-secondary">
+                      <Headset />
+                      <span>Customer support</span>
+                    </DropdownMenuItem>
+                  </Link>
+                </DropdownMenuGroup>
+
+                <DropdownMenuSeparator />
+
+                <DropdownMenuGroup>
+                  <DropdownMenuItem className="focus:bg-primary cursor-pointer focus:text-secondary">
+                    <Moon />
+                    Toggle Theme
                   </DropdownMenuItem>
-                </Link>
-                <Link
-                  href={`/${pathname}/settings`}
-                  className="flex items-center gap-2"
-                >
-                  <DropdownMenuItem className="focus:bg-primary w-full cursor-pointer focus:text-secondary">
-                    <UserRoundPen />
-                    <span>Profile</span>
+
+                  <DropdownMenuItem
+                    onClick={handleLogout}
+                    className="focus:bg-primary cursor-pointer focus:text-secondary"
+                  >
+                    <LogOut />
+                    Log out
                   </DropdownMenuItem>
-                </Link>
-                <Link href={"/"} className="flex items-center gap-2">
-                  <DropdownMenuItem className="focus:bg-primary w-full cursor-pointer focus:text-secondary">
-                    <Headset />
-                    <span>Customer support</span>
+
+                  {/* Open Delete Dialog */}
+                  <DropdownMenuItem
+                    onClick={() => setOpen(true)}
+                    className="focus:bg-destructive cursor-pointer hover:text-secondary focus:text-secondary"
+                  >
+                    <Trash />
+                    Delete Account
                   </DropdownMenuItem>
-                </Link>
-              </DropdownMenuGroup>
-              <DropdownMenuSeparator />
-              <DropdownMenuGroup>
-                <DropdownMenuItem className="focus:bg-primary cursor-pointer focus:text-secondary">
-                  <Moon />
-                  Toggle Theme
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={handleLogout}
-                  className="focus:bg-primary cursor-pointer focus:text-secondary"
-                >
-                  <LogOut />
-                  Log out
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className="focus:bg-primary cursor-pointer hover:text-secondary focus:text-secondary"
-                  onClick={handleDeleteAccount}
-                >
-                  <Trash />
-                  Delete Account
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
-              <DropdownMenuSeparator />
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </SidebarMenuItem>
-      </SidebarMenu>
-      <Notification />
-    </div>
+                </DropdownMenuGroup>
+
+                <DropdownMenuSeparator />
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
+        </SidebarMenu>
+        <Notification />
+      </div>
+    </>
   );
 }

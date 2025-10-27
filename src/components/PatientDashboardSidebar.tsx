@@ -13,30 +13,26 @@ import {
 } from "@/components/ui/sidebar";
 import { PatientNav } from "./PatientNav";
 import { Separator } from "./ui/separator";
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
+
+type DashboardSidebarProps = React.ComponentProps<typeof Sidebar> & {
+  username: string | null;
 };
 
-type DashboardSide = {
-  props?: React.ComponentProps<typeof Sidebar>;
-};
-
-export function PatientDashboardSidebar({ ...props }: DashboardSide) {
+export function PatientDashboardSidebar({
+  username,
+  ...props
+}: DashboardSidebarProps) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="py-6">
         <DashboardLogo />
       </SidebarHeader>
       <Separator />
-      <SidebarContent className="">
+      <SidebarContent>
         <PatientNav />
       </SidebarContent>
-      <SidebarFooter className="">
-        <NavUser user={data.user} />
+      <SidebarFooter>
+        <NavUser username={username} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

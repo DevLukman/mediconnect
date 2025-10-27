@@ -4,7 +4,7 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Mediconnect | ResetPassword",
-  description: "Connecting You to Quality Healthcare",
+  description: "Create a new password for your MediConnect account.",
 };
 
 export default function Page() {

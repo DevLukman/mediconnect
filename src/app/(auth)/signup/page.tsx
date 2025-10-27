@@ -3,7 +3,8 @@ import Logo from "@/components/Logo";
 import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Mediconnect | Sign up",
-  description: "Connecting You to Quality Healthcare",
+  description:
+    "Create your MediConnect account to start booking appointments with verified doctors. Join thousands of patients managing their healthcare online.",
 };
 
 export default function Page() {

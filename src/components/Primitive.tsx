@@ -1,7 +1,5 @@
 "use client";
-
-import * as React from "react";
-
+import { useMediaQuery } from "@/utils/mediaQuery";
 import { type ClassValue, clsx } from "clsx";
 import { composeRenderProps } from "react-aria-components";
 import { twMerge } from "tailwind-merge";
@@ -50,24 +48,6 @@ const focusButtonStyles = tv({
   },
 });
 
-const useMediaQuery = (query: string) => {
-  const [value, setValue] = React.useState(false);
-
-  React.useEffect(() => {
-    const onChange = (event: MediaQueryListEvent) => {
-      setValue(event.matches);
-    };
-
-    const result = matchMedia(query);
-    result.addEventListener("change", onChange);
-    setValue(result.matches);
-
-    return () => result.removeEventListener("change", onChange);
-  }, [query]);
-
-  return value;
-};
-
 const ctr = composeTailwindRenderProps;
 const tm = twMerge;
 const cr = composeRenderProps;
@@ -77,11 +57,11 @@ export {
   composeTailwindRenderProps,
   cr,
   ctr,
+  focusButtonStyles,
   focusRing,
   focusStyles,
-  focusButtonStyles,
+  isIos,
   tm,
   twMerge,
   useMediaQuery,
-  isIos,
 };
