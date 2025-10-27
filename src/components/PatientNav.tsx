@@ -11,10 +11,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 export const PATIENT_ROUTES = {
   dashboard: "/patient/dashboard",
-  patients: "/patient/doctors",
+  doctors: "/patient/doctors",
   appointments: "/patient/appointments",
   settings: "/patient/settings",
 } as const;
+
 export type PatientRoute = (typeof PATIENT_ROUTES)[keyof typeof PATIENT_ROUTES];
 export function PatientNav() {
   const pathname = usePathname();
@@ -26,9 +27,12 @@ export function PatientNav() {
           <Link
             key={item.name}
             href={item.url as PatientRoute}
-            className={cn(`rounded-lg ${pathname === item.url ? "bg-primary text-secondary" : "hover:bg-secondary"} 
-            transition-all ease-in-out 
-           py-1`)}
+            className={cn(
+              "rounded-lg py-1 transition-all ease-in-out",
+              pathname === item.url
+                ? "bg-primary text-secondary"
+                : "hover:bg-secondary"
+            )}
           >
             <SidebarMenuButton
               tooltip={item.name}

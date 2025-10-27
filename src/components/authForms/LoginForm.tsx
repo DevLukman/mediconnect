@@ -79,8 +79,7 @@ export default function LoginForm() {
                 href={"/forgetpassword"}
                 className="text-sm underline text-primary"
               >
-                {" "}
-                Forgetpassword?
+                Forgotpassword?
               </Link>
             </div>
             <InputGroup>

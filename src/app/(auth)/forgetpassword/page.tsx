@@ -1,10 +1,10 @@
 import ForgetPasswordForm from "@/components/authForms/ForgetpasswordForm";
 import Logo from "@/components/Logo";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Mediconnect | ForgetPassword",
+  title: "Mediconnect | Forgot Password",
   description:
     "Reset your MediConnect password. Enter your email address and we'll send you instructions to create a new password.",
 };

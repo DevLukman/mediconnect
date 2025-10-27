@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 type UserRole = "ADMIN" | "PATIENT" | "DOCTOR";
 type Session = {
-  user?: { role?: "ADMIN" | "PATIENT" | "DOCTOR" } | null;
+  user?: { role?: UserRole };
 } | null;
 
 const roleRoutes: Record<UserRole, string> = {

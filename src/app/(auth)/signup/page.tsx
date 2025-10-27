@@ -1,6 +1,6 @@
 import SignupForm from "@/components/authForms/SignupForm";
 import Logo from "@/components/Logo";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Mediconnect | Sign up",
   description:
