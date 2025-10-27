@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -13,8 +14,9 @@ export function Notification() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost">
-          <Bell />
+        <Button variant="ghost" aria-label="Open notifications">
+          <Bell aria-hidden="true" />
+          <span className="sr-only">Open notifications</span>
         </Button>
       </SheetTrigger>
       <SheetContent>

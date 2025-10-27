@@ -46,12 +46,12 @@ export const auth = betterAuth({
       }
     },
   },
-  // session: {
-  //   cookieCache: {
-  //     enabled: true,
-  //     maxAge: 60 * 60,
-  //   },
-  // },
+  session: {
+    cookieCache: {
+      enabled: true,
+      maxAge: 60 * 60,
+    },
+  },
   user: {
     additionalFields: {
       role: {

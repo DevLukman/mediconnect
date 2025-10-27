@@ -4,7 +4,8 @@ import { Metadata } from "next";
 import Link from "next/link";
 export const metadata: Metadata = {
   title: "Mediconnect | Login",
-  description: "Connecting You to Quality Healthcare",
+  description:
+    "Login in to your MediConnect account to book appointments, view your medical records, and manage your healthcare.",
 };
 
 export default function Page() {

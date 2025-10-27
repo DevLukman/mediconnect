@@ -1,9 +1,10 @@
-import { auth } from "@/lib/auth";
 import { betterFetch } from "@better-fetch/fetch";
 import { NextRequest, NextResponse } from "next/server";
 
 type UserRole = "ADMIN" | "PATIENT" | "DOCTOR";
-type Session = typeof auth.$Infer.Session;
+type Session = {
+  user?: { role?: "ADMIN" | "PATIENT" | "DOCTOR" } | null;
+} | null;
 
 const roleRoutes: Record<UserRole, string> = {
   ADMIN: "/admin",

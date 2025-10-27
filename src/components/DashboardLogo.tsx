@@ -1,30 +1,21 @@
 "use client";
 import { SidebarMenu, SidebarMenuItem } from "@/components/ui/sidebar";
+import { Role, ROLE_ROUTES } from "@/utils/constant";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { LogoIcon } from "./LogoIcon";
 
 export function DashboardLogo() {
-  const pathname = usePathname().split("/")[1];
-
+  const pathname = usePathname();
+  const role = pathname.split("/")[1] as Role;
+  if (!role || !(role in ROLE_ROUTES)) {
+    return null;
+  }
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <Link
-          href={`/${pathname}/dashboard`}
-          className="flex items-center gap-2"
-        >
-          <svg
-            viewBox="0 0 100 100"
-            width={30}
-            height={30}
-            fill="none"
-            aria-hidden="true"
-          >
-            <circle cx="50" cy="50" r="45" fill="#0EA5E9" />
-            <rect x="45" y="25" width="10" height="50" fill="white" rx="2" />
-            <rect x="25" y="45" width="50" height="10" fill="white" rx="2" />
-          </svg>
-
+        <Link href={ROLE_ROUTES[role]} className="flex items-center gap-2">
+          <LogoIcon />
           <div className="grid flex-1 text-left text-sm leading-tight">
             <span className="truncate text-2xl font-bold">Mediconnect</span>
           </div>

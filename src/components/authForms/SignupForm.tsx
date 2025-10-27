@@ -3,6 +3,7 @@ import {
   DoctorStepTwoFormData,
   PatientStepTwoFormData,
   StepOneFormData,
+  TSignUpSchema,
 } from "@/lib/types";
 
 import { Signup } from "@/lib/action/authAction";
@@ -25,21 +26,14 @@ export default function SignupForm() {
     setCurrentStep(2);
   }
 
-  function handlePatientComplete(patientData: PatientStepTwoFormData) {
-    const data = {
-      ...stepOneData,
-      ...patientData,
-    };
-
-    const payload = {
-      name: data.name!,
-      email: data.email!,
-      password: data.password!,
-      role: data.role!,
-    };
-
+  function submit(data: {
+    name: string;
+    email: string;
+    password: string;
+    role: "PATIENT" | "DOCTOR" | "ADMIN";
+  }) {
     startTransition(async () => {
-      const result = await Signup(payload);
+      const result = await Signup(data);
       if (result.success) {
         toast.success(result.message);
         router.push("/");
@@ -48,28 +42,34 @@ export default function SignupForm() {
       }
     });
   }
+  function handlePatientComplete(patientData: PatientStepTwoFormData) {
+    const data = {
+      ...stepOneData,
+      ...patientData,
+    };
+
+    const payload: TSignUpSchema = {
+      name: data.name!,
+      email: data.email!,
+      password: data.password!,
+      role: data.role!,
+    };
+    submit(payload);
+  }
 
   function handleDoctorComplete(doctorData: DoctorStepTwoFormData) {
     const data = {
       ...stepOneData,
       ...doctorData,
     };
-    const payload = {
+    const payload: TSignUpSchema = {
       name: data.name!,
       email: data.email!,
       password: data.password!,
       role: data.role!,
     };
 
-    startTransition(async () => {
-      const result = await Signup(payload);
-      if (result.success) {
-        toast.success(result.message);
-        router.push("/");
-      } else {
-        toast.error(result.message);
-      }
-    });
+    submit(payload);
   }
 
   function handleBack() {

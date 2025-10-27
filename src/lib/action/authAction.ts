@@ -1,6 +1,8 @@
 "use server";
+import { Prisma } from "@/generated/prisma";
 import { headers } from "next/headers";
 import { auth } from "../auth";
+import { db } from "../prisma";
 import {
   ForgetPasswordSchema,
   LoginSchema,
@@ -10,7 +12,6 @@ import {
   TSignUpSchema,
 } from "../types";
 import { getUserSession } from "./getSession";
-import { db } from "../prisma";
 
 export async function Login(data: TLoginSchema) {
   const validation = LoginSchema.safeParse(data);
@@ -37,7 +38,7 @@ export async function Login(data: TLoginSchema) {
 export async function Signup(data: TSignUpSchema) {
   const validation = SignupSchema.safeParse(data);
   if (!validation.success) {
-    return { success: false, message: "Invalid credentials" };
+    return { success: false, message: "Invalid credentials payload" };
   }
   try {
     await auth.api.signUpEmail({
@@ -106,18 +107,25 @@ export async function ResetPassword(newPassword: string, token: string) {
 export async function DeleteUser() {
   const session = await getUserSession();
   if (!session) {
-    return { success: false, message: "Invalid user" };
+    return { success: false, message: "Unauthorised" };
   }
   try {
     await db.user.delete({
       where: { id: session.user.id },
     });
-    return { success: true, message: "Password reset successful" };
+    await auth.api.signOut({ headers: await headers() });
+    return { success: true, message: "Account deleted" };
   } catch (error) {
     const e = error as Error;
-    return {
-      success: false,
-      message: e.message || "Error with deleting account",
-    };
+    if (
+      e instanceof Prisma.PrismaClientKnownRequestError &&
+      e.code === "P2025"
+    ) {
+      return {
+        success: false,
+        message: "Account not found or already deleted",
+      };
+    }
+    return { success: false, message: "Error deleting account" };
   }
 }
