@@ -3,7 +3,7 @@ import Logo from "@/components/Logo";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Mediconnect | ResetPassword",
+  title: "Mediconnect | Reset Password",
   description: "Create a new password for your MediConnect account.",
 };
 

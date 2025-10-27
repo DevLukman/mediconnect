@@ -3,7 +3,7 @@ import Logo from "@/components/Logo";
 import type { Metadata } from "next";
 import Link from "next/link";
 export const metadata: Metadata = {
-  title: "Mediconnect | Login",
+  title: "Mediconnect | Log in",
   description:
     "Log in to your MediConnect account to book appointments, view your medical records, and manage your healthcare.",
 };
