@@ -34,7 +34,7 @@ export function DoctorNav() {
                 className="cursor-pointer pointer-events-none"
               >
                 {item.icon && <item.icon />}
-                <span className="text-base capitalize">{item.name}</span>
+                <span className="text-sm capitalize">{item.name}</span>
               </SidebarMenuButton>
             </Link>
           );
