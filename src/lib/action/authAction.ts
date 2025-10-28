@@ -1,15 +1,16 @@
 "use server";
-import { Prisma } from "@/generated/prisma";
 import { headers } from "next/headers";
 import { auth } from "../auth";
 import { db } from "../prisma";
 import {
+  combinedDoctorSchema,
+  combinedDoctorType,
+  combinedPatientSchema,
+  CombinedPatientType,
   ForgetPasswordSchema,
   LoginSchema,
-  SignupSchema,
   TForgetPasswordSchema,
   TLoginSchema,
-  TSignUpSchema,
 } from "../types";
 import { getUserSession } from "./getSession";
 
@@ -27,31 +28,87 @@ export async function Login(data: TLoginSchema) {
     });
     return { success: true, message: "Login successful" };
   } catch (error) {
-    const e = error as Error;
     return {
       success: false,
-      message: e.message || "Please check your information",
+      message:
+        error instanceof Error
+          ? error.message
+          : "There was an error with Log in",
     };
   }
 }
 
-export async function Signup(data: TSignUpSchema) {
-  const validation = SignupSchema.safeParse(data);
+export async function SignupPatient(data: CombinedPatientType) {
+  const validation = combinedPatientSchema.safeParse(data);
   if (!validation.success) {
     return { success: false, message: "Invalid credentials payload" };
   }
   try {
-    await auth.api.signUpEmail({
-      body: {
-        ...validation.data,
+    const { data: validData } = validation;
+    const signupResponse = await auth.api.signUpEmail({ body: validData });
+    const userId = signupResponse.user.id;
+    if (!userId) {
+      return { success: false, message: "Failed to create user account" };
+    }
+    await db.patient.create({
+      data: {
+        userId,
+        bloodType: validData.bloodType,
+        gender: validData.gender,
+        genotype: validData.genotype,
+        birthDate: validData.dateOfBirth,
+        occupation: validData.occupation,
+        phone: validData.phone,
+        address: validData.address,
+        timezone: validData.timeZone,
+        country: validData.country,
       },
     });
     return { success: true, message: "Signup successful" };
   } catch (error) {
-    const e = error as Error;
     return {
       success: false,
-      message: e.message || "There was an error with Signup",
+      message:
+        error instanceof Error
+          ? error.message
+          : "There was an error with Signup",
+    };
+  }
+}
+export async function SignupDoctor(data: combinedDoctorType) {
+  const validation = combinedDoctorSchema.safeParse(data);
+  if (!validation.success) {
+    return { success: false, message: "Invalid credentials payload" };
+  }
+
+  try {
+    const { data: validData } = validation;
+    const signupResponse = await auth.api.signUpEmail({ body: validData });
+    const userId = signupResponse.user.id;
+    if (!userId) {
+      return { success: false, message: "Failed to create user account" };
+    }
+    await db.doctor.create({
+      data: {
+        userId,
+        specialty: validData.specialty,
+        yearsOfExperience: validData.yearsOfExperience,
+        startTime: validData.startTime,
+        endTime: validData.endTime,
+        consultationFee: validData.consultationFee,
+        timezone: validData.timeZone,
+        country: validData.country,
+        bio: validData.bio,
+      },
+    });
+    return { success: true, message: "Signup successful" };
+  } catch (error) {
+    return {
+      success: false,
+      message:
+        error instanceof Error
+          ? error.message
+          : "There was an error with Signup",
     };
   }
 }
@@ -61,8 +118,13 @@ export async function Logout() {
     await auth.api.signOut({ headers: await headers() });
     return { success: true, message: "Log out successful" };
   } catch (error) {
-    const e = error as Error;
-    return { success: false, message: e.message || "Failed to Log out" };
+    return {
+      success: false,
+      message:
+        error instanceof Error
+          ? error.message
+          : "There is an error with log out",
+    };
   }
 }
 
@@ -81,8 +143,13 @@ export async function ForgetPassword(data: TForgetPasswordSchema) {
     });
     return { success: true, message: "Password reset email sent" };
   } catch (error) {
-    const e = error as Error;
-    return { success: false, message: e.message || "There was an error" };
+    return {
+      success: false,
+      message:
+        error instanceof Error
+          ? error.message
+          : "There was an error with forgot password",
+    };
   }
 }
 
@@ -96,10 +163,12 @@ export async function ResetPassword(newPassword: string, token: string) {
     });
     return { success: true, message: "Password reset successful" };
   } catch (error) {
-    const e = error as Error;
     return {
       success: false,
-      message: e.message || "Password reset not successful",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Reset password not successful",
     };
   }
 }
@@ -116,16 +185,12 @@ export async function DeleteUser() {
     await auth.api.signOut({ headers: await headers() });
     return { success: true, message: "Account deleted" };
   } catch (error) {
-    const e = error as Error;
-    if (
-      e instanceof Prisma.PrismaClientKnownRequestError &&
-      e.code === "P2025"
-    ) {
-      return {
-        success: false,
-        message: "Account not found or already deleted",
-      };
-    }
-    return { success: false, message: "Error deleting account" };
+    return {
+      success: false,
+      message:
+        error instanceof Error
+          ? error.message
+          : "There was an error with deleting account",
+    };
   }
 }

@@ -1,12 +1,14 @@
 "use client";
 import {
+  combinedDoctorType,
+  CombinedPatientType,
   DoctorStepTwoFormData,
   PatientStepTwoFormData,
   StepOneFormData,
-  TSignUpSchema,
 } from "@/lib/types";
 
-import { Signup } from "@/lib/action/authAction";
+// import { Signup } from "@/lib/action/authAction";
+import { SignupDoctor, SignupPatient } from "@/lib/action/authAction";
 import { ArrowBigRight, Check } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -26,14 +28,13 @@ export default function SignupForm() {
     setCurrentStep(2);
   }
 
-  function submit(data: {
-    name: string;
-    email: string;
-    password: string;
-    role: "PATIENT" | "DOCTOR" | "ADMIN";
-  }) {
+  function handlePatientComplete(patientData: PatientStepTwoFormData) {
+    const data: CombinedPatientType = {
+      ...stepOneData,
+      ...patientData,
+    } as CombinedPatientType;
     startTransition(async () => {
-      const result = await Signup(data);
+      const result = await SignupPatient(data);
       if (result.success) {
         toast.success(result.message);
         router.push("/");
@@ -42,39 +43,25 @@ export default function SignupForm() {
       }
     });
   }
-  function handlePatientComplete(patientData: PatientStepTwoFormData) {
-    const data = {
-      ...stepOneData,
-      ...patientData,
-    };
-
-    const payload: TSignUpSchema = {
-      name: data.name!,
-      email: data.email!,
-      password: data.password!,
-      role: data.role!,
-    };
-    submit(payload);
-  }
 
   function handleDoctorComplete(doctorData: DoctorStepTwoFormData) {
-    const data = {
+    const data: combinedDoctorType = {
       ...stepOneData,
       ...doctorData,
-    };
-    const payload: TSignUpSchema = {
-      name: data.name!,
-      email: data.email!,
-      password: data.password!,
-      role: data.role!,
-    };
+    } as combinedDoctorType;
 
-    submit(payload);
+    startTransition(async () => {
+      const result = await SignupDoctor(data);
+      if (result.success) {
+        toast.success(result.message);
+      } else {
+        toast.error(result.message);
+      }
+    });
   }
 
   function handleBack() {
     setCurrentStep(1);
-    setStepOneData(null);
   }
   return (
     <>

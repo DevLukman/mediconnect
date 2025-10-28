@@ -16,10 +16,12 @@ import { Separator } from "./ui/separator";
 
 type DashboardSidebarProps = React.ComponentProps<typeof Sidebar> & {
   username: string | null;
+  image: string | null;
 };
 
 export function PatientDashboardSidebar({
   username,
+  image,
   ...props
 }: DashboardSidebarProps) {
   return (
@@ -32,7 +34,7 @@ export function PatientDashboardSidebar({
         <PatientNav />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser username={username} />
+        <NavUser username={username} image={image} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

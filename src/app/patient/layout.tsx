@@ -15,9 +15,10 @@ export default async function RootLayout({
 }>) {
   const session = await getUserSession();
   const username = session?.user.name ?? null;
+  const image = session?.user.image ?? null;
   return (
     <SidebarProvider>
-      <PatientDashboardSidebar username={username} />
+      <PatientDashboardSidebar username={username} image={image} />
       <SidebarInset>
         <DashboardHeader />
         <main className="px-8 py-2">{children}</main>

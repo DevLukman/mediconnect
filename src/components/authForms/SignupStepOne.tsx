@@ -23,7 +23,7 @@ import {
   FieldLabel,
   FieldSet,
 } from "@/components/ui/field";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -43,14 +43,49 @@ interface StepOneProps {
 
 export default function StepOneForm({ onComplete }: StepOneProps) {
   const [showPassword, setShowPassword] = useState(false);
+  const randomId = Math.floor(Math.random() * 10000); // random number between 0–9999
+  const randomAvatar = `https://i.pravatar.cc/150?u=${randomId}`;
+  const getUserTimezone = () => {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone;
+  };
+  const timeZone = getUserTimezone();
+
   const {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<StepOneFormData>({
     resolver: zodResolver(stepOneSchema),
+    defaultValues: {
+      image: randomAvatar,
+      timeZone,
+      country: "",
+    },
   });
+
+  useEffect(() => {
+    // Fetch accurate country from IP
+    const fetchCountry = async () => {
+      try {
+        const response = await fetch("https://ipapi.co/json/");
+        const data = await response.json();
+        setValue("country", data.country_name);
+      } catch (error) {
+        console.error("Failed to fetch country:", error);
+        // Fallback: try to guess from timezone
+        const locale = Intl.DateTimeFormat().resolvedOptions().locale;
+        const countryCode = locale.split("-")[1];
+        if (countryCode) {
+          setValue("country", countryCode);
+        }
+      }
+    };
+
+    fetchCountry();
+  }, [setValue]);
+
   function onSubmit(data: StepOneFormData) {
     onComplete(data);
   }
