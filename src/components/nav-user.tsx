@@ -1,7 +1,6 @@
 "use client";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -9,7 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,16 +33,19 @@ import {
   Trash,
   UserRoundPen,
 } from "lucide-react";
+import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Notification } from "./Notification";
-import { Spinner } from "./ui/spinner";
-import { useTheme } from "next-themes";
 import { Button } from "./ui/button";
-
-export function NavUser({ username }: { username: string | null }) {
+import { Spinner } from "./ui/spinner";
+type NavUser = {
+  username: string | null;
+  image: string | null;
+};
+export function NavUser({ username, image }: NavUser) {
   const router = useRouter();
   const pathname = usePathname().split("/")[1] as string;
   const { isMobile } = useSidebar();
@@ -54,13 +56,20 @@ export function NavUser({ username }: { username: string | null }) {
     setTheme(theme === "dark" ? "light" : "dark");
   };
   async function handleLogout() {
-    const result = await Logout();
-    if (result.success) {
-      toast.success(result.message);
-      router.push("/login");
-    } else {
-      toast.error(result.message);
-    }
+    toast.promise(
+      Logout().then((result) => {
+        if (result.success) {
+          router.push("/login");
+          return result;
+        }
+        throw new Error(result.message);
+      }),
+      {
+        loading: "Logging out...",
+        success: (result) => result.message || "Successfully logged out!",
+        error: (err) => err.message || "Failed to logout",
+      }
+    );
   }
 
   async function handleDeleteAccount() {
@@ -96,13 +105,16 @@ export function NavUser({ username }: { username: string | null }) {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={loading} className="cursor-pointer">
+            <AlertDialogCancel
+              disabled={loading}
+              className="cursor-pointer min-w-24"
+            >
               Cancel
             </AlertDialogCancel>
             <Button
               onClick={handleDeleteAccount}
               disabled={loading}
-              className="flex items-center cursor-pointer justify-center"
+              className="flex items-center cursor-pointer justify-center min-w-24"
               variant="destructive"
             >
               {loading ? <Spinner /> : "Continue"}
@@ -120,6 +132,7 @@ export function NavUser({ username }: { username: string | null }) {
                   className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
                   <Avatar className="h-8 w-8 rounded-lg">
+                    <AvatarImage src={image!} alt={username!} />
                     <AvatarFallback className="rounded-lg">
                       {(username?.slice(0, 2) ?? "CN").toUpperCase()}
                     </AvatarFallback>

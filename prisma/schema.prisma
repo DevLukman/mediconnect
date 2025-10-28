@@ -102,7 +102,7 @@ model Account {
   createdAt             DateTime  @default(now())
   updatedAt             DateTime  @updatedAt
 
-  @@unique([providerId, accountId])
+ 
   @@map("account")
 }
 
@@ -130,6 +130,7 @@ model Patient {
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @default(now()) @updatedAt
   timezone     String        @default("Africa/Lagos")
+  country      String
   appointments Appointment[]
   reviews      Review[]
   user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -173,8 +174,8 @@ model Appointment {
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @default(now()) @updatedAt
   appointmentDate DateTime          @db.Date
-  patient         Patient           @relation(fields: [patientId], references: [id])
-  doctor          Doctor            @relation(fields: [doctorId], references: [id])
+  patient         Patient           @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  doctor          Doctor            @relation(fields: [doctorId], references: [id], onDelete: Cascade)
   payment         Payment?
   notification    Notification[]
 

@@ -21,7 +21,10 @@ export const SignupSchema = z.object({
   name: z.string().min(1, "Name is required").max(50),
   email: z.email("Invalid email format").max(50),
   password: z.string().min(8, "Password must be at least 8 characters").max(20),
-  role: z.enum(["PATIENT", "DOCTOR", "ADMIN"], "Please select a role"),
+  image: z.string(),
+  role: z.enum(["PATIENT", "DOCTOR", "ADMIN"], {
+    error: "Please select a role",
+  }),
 });
 
 export type TSignUpSchema = z.infer<typeof SignupSchema>;
@@ -52,33 +55,43 @@ export const stepOneSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.email("Invalid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
-  role: z.enum(["PATIENT", "DOCTOR", "ADMIN"], "Please select a role"),
+  image: z.string(),
+  country: z.string(),
+  timeZone: z.string(),
+  role: z.enum(["PATIENT", "DOCTOR", "ADMIN"], {
+    error: "Please select a role",
+  }),
 });
 
 export const patientStepTwoSchema = z.object({
   phone: z.string().min(10, "Phone number must be at least 10 digits"),
   dateOfBirth: z.string().min(1, "Date of birth is required"),
-  gender: z.enum(
-    ["MALE", "FEMALE", "OTHER", "PREFER_NOT_TO_SAY"],
-    "gender is required"
-  ),
-  genotype: z.enum(["AA", "AS", "SS"], "select a genotype"),
+  gender: z.enum(["MALE", "FEMALE", "OTHER", "PREFER_NOT_TO_SAY"], {
+    error: "gender is required",
+  }),
+  genotype: z.enum(["AA", "AS", "SS"], { error: "select a genotype" }),
   address: z.string().min(2, "Address is required"),
   bloodType: z.string().min(2, "Blood type is required"),
   occupation: z.string().min(2, "occupation is required"),
 });
 
 export const doctorStepTwoSchema = z.object({
-   specialty : z.string().min(1, "Specialty is required"),
+  specialty: z.string().min(1, "Specialty is required"),
   yearsOfExperience: z
     .number()
     .min(0, "Years of experience must be 0 or greater")
     .max(30, "we don't accept experience more than 30"),
   bio: z.string().min(10, "Bio must be at least 10 characters"),
-  consultationFee : z.number().min(10, "Price must at least 10"),
+  consultationFee: z.number().min(10, "Price must at least 10"),
   startTime: z.string(),
   endTime: z.string(),
 });
+
+//combined types
+export const combinedPatientSchema = stepOneSchema.and(patientStepTwoSchema);
+export type CombinedPatientType = z.infer<typeof combinedPatientSchema>;
+export const combinedDoctorSchema = stepOneSchema.and(doctorStepTwoSchema);
+export type combinedDoctorType = z.infer<typeof combinedDoctorSchema>;
 
 // TypeScript types derived from Zod schemas
 export type StepOneFormData = z.infer<typeof stepOneSchema>;

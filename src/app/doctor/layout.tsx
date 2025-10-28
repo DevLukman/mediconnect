@@ -16,10 +16,11 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await getUserSession();
-  const username = session?.user.name;
+  const username = session?.user.name ?? null;
+  const image = session?.user.image ?? null;
   return (
     <SidebarProvider>
-      <DashboardSidebar username={username || null} />
+      <DashboardSidebar username={username} image={image} />
       <SidebarInset>
         <DashboardHeader />
         <main className="px-8 py-2">{children}</main>
