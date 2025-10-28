@@ -64,18 +64,18 @@ export const patientStepTwoSchema = z.object({
   ),
   genotype: z.enum(["AA", "AS", "SS"], "select a genotype"),
   address: z.string().min(2, "Address is required"),
-  bloodtype: z.string().min(2, "Blood type is required"),
+  bloodType: z.string().min(2, "Blood type is required"),
   occupation: z.string().min(2, "occupation is required"),
 });
 
 export const doctorStepTwoSchema = z.object({
-  specialization: z.string().min(1, "Specialty is required"),
+   specialty : z.string().min(1, "Specialty is required"),
   yearsOfExperience: z
     .number()
     .min(0, "Years of experience must be 0 or greater")
     .max(30, "we don't accept experience more than 30"),
   bio: z.string().min(10, "Bio must be at least 10 characters"),
-  price: z.number().min(10, "Price must at least 10"),
+  consultationFee : z.number().min(10, "Price must at least 10"),
   startTime: z.string(),
   endTime: z.string(),
 });
