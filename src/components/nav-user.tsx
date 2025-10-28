@@ -41,6 +41,7 @@ import { toast } from "sonner";
 import { Notification } from "./Notification";
 import { Spinner } from "./ui/spinner";
 import { useTheme } from "next-themes";
+import { Button } from "./ui/button";
 
 export function NavUser({ username }: { username: string | null }) {
   const router = useRouter();
@@ -95,14 +96,17 @@ export function NavUser({ username }: { username: string | null }) {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={loading}>Cancel</AlertDialogCancel>
-            <AlertDialogAction
+            <AlertDialogCancel disabled={loading} className="cursor-pointer">
+              Cancel
+            </AlertDialogCancel>
+            <Button
               onClick={handleDeleteAccount}
               disabled={loading}
-              className="flex items-center  justify-center"
+              className="flex items-center cursor-pointer justify-center"
+              variant="destructive"
             >
               {loading ? <Spinner /> : "Continue"}
-            </AlertDialogAction>
+            </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
@@ -121,7 +125,9 @@ export function NavUser({ username }: { username: string | null }) {
                     </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-medium">{username}</span>
+                    <span className="truncate font-medium text-sm">
+                      {username}
+                    </span>
                   </div>
                   <ChevronsUpDown className="ml-auto size-4" />
                 </SidebarMenuButton>
