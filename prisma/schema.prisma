@@ -151,7 +151,6 @@ model Doctor {
   timezone          String        @default("Africa/Lagos")
   country           String?       @default("Nigeria")
   status            DoctorStatus  @default(PENDING)
-  approvedAt        DateTime?     @updatedAt
   user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   appointments      Appointment[]
   reviews           Review[]

@@ -40,9 +40,9 @@ export default function DoctorStepTwo({
   } = useForm<DoctorStepTwoFormData>({
     resolver: zodResolver(doctorStepTwoSchema),
     defaultValues: {
-      specialization: undefined,
+       specialty : undefined,
       yearsOfExperience: undefined,
-      price: undefined,
+      consultationFee : undefined,
       startTime: "10:00:00",
       endTime: "18:00:00",
       bio: "",
@@ -60,7 +60,7 @@ export default function DoctorStepTwo({
           <Field className="gap-1.5">
             <FieldLabel htmlFor="specialization">Specialization</FieldLabel>
             <Controller
-              name="specialization"
+              name="specialty"
               control={control}
               render={({ field }) => (
                 <Select
@@ -95,9 +95,9 @@ export default function DoctorStepTwo({
                 </Select>
               )}
             />
-            {errors.specialization?.message && (
+            {errors.specialty ?.message && (
               <FieldError className="pl-1 text-sm text-destructive">
-                {errors.specialization.message}
+                {errors.specialty .message}
               </FieldError>
             )}
           </Field>
@@ -131,7 +131,7 @@ export default function DoctorStepTwo({
           <Field className="gap-1.5">
             <Controller
               control={control}
-              name="price"
+              name="consultationFee"
               render={({ field }) => (
                 <NumberField
                   id="price"
@@ -147,9 +147,9 @@ export default function DoctorStepTwo({
                 />
               )}
             />
-            {errors.price?.message && (
+            {errors.consultationFee ?.message && (
               <FieldError className="pl-1 text-sm text-destructive">
-                {errors.price.message}
+                {errors.consultationFee .message}
               </FieldError>
             )}
           </Field>

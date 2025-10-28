@@ -133,7 +133,7 @@ export default function PatientStepTwo({
           <Field className="gap-1.5">
             <FieldLabel htmlFor="bloodtype">Blood Group</FieldLabel>
             <Controller
-              name="bloodtype"
+              name="bloodType"
               control={control}
               render={({ field }) => (
                 <Select
@@ -159,9 +159,9 @@ export default function PatientStepTwo({
                 </Select>
               )}
             />
-            {errors.bloodtype?.message && (
+            {errors.bloodType?.message && (
               <FieldError className="pl-1 text-sm text-destructive">
-                {errors.bloodtype.message}
+                {errors.bloodType.message}
               </FieldError>
             )}
           </Field>
