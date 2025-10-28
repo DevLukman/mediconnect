@@ -53,7 +53,7 @@ model User {
   id            String         @id @default(cuid())
   name          String
   email         String
-  role          Role           @default(PATIENT)
+  role          Role           
   emailVerified Boolean        @default(false)
   image         String?
   createdAt     DateTime       @default(now())
@@ -174,8 +174,8 @@ model Appointment {
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @default(now()) @updatedAt
   appointmentDate DateTime          @db.Date
-  patient         Patient           @relation(fields: [patientId], references: [id], onDelete: Cascade)
-  doctor          Doctor            @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  patient         Patient           @relation(fields: [patientId], references: [id])
+  doctor          Doctor            @relation(fields: [doctorId], references: [id])
   payment         Payment?
   notification    Notification[]
 

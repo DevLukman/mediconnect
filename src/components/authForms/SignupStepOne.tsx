@@ -1,7 +1,8 @@
 "use client";
 import { StepOneFormData, stepOneSchema } from "@/lib/types";
 import { Controller, useForm } from "react-hook-form";
-
+import { createAvatar } from "@dicebear/core";
+import { initials } from "@dicebear/collection";
 import {
   InputGroup,
   InputGroupAddon,
@@ -43,8 +44,13 @@ interface StepOneProps {
 
 export default function StepOneForm({ onComplete }: StepOneProps) {
   const [showPassword, setShowPassword] = useState(false);
-  const randomId = Math.floor(Math.random() * 10000); // random number between 0–9999
-  const randomAvatar = `https://i.pravatar.cc/150?u=${randomId}`;
+  const getRandomAvatar = () => {
+    const seed = Math.random().toString(36).substring(7); // Random seed
+    // Choose a style: avataaars, bottts, identicon, initials, etc.
+    return `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}`;
+  };
+  const avatar: string = getRandomAvatar();
+
   const getUserTimezone = () => {
     return Intl.DateTimeFormat().resolvedOptions().timeZone;
   };
@@ -59,15 +65,14 @@ export default function StepOneForm({ onComplete }: StepOneProps) {
   } = useForm<StepOneFormData>({
     resolver: zodResolver(stepOneSchema),
     defaultValues: {
-      image: randomAvatar,
+      image: avatar,
       timeZone,
       country: "",
     },
   });
 
   useEffect(() => {
-    // Fetch accurate country from IP
-    const fetchCountry = async () => {
+    async function fetchCountry() {
       try {
         const response = await fetch("https://ipapi.co/json/");
         const data = await response.json();
@@ -81,7 +86,7 @@ export default function StepOneForm({ onComplete }: StepOneProps) {
           setValue("country", countryCode);
         }
       }
-    };
+    }
 
     fetchCountry();
   }, [setValue]);
