@@ -1,6 +1,6 @@
 "use client";
 import {
-  combinedDoctorType,
+  CombinedDoctorType,
   CombinedPatientType,
   DoctorStepTwoFormData,
   PatientStepTwoFormData,
@@ -29,15 +29,20 @@ export default function SignupForm() {
   }
 
   function handlePatientComplete(patientData: PatientStepTwoFormData) {
+    if (!stepOneData) {
+      toast.error("Step one data is missing");
+      setCurrentStep(1);
+      return;
+    }
     const data: CombinedPatientType = {
       ...stepOneData,
       ...patientData,
-    } as CombinedPatientType;
+    };
     startTransition(async () => {
       const result = await SignupPatient(data);
       if (result.success) {
         toast.success(result.message);
-        router.push("/");
+        router.push("/patient/dashboard");
       } else {
         toast.error(result.message);
       }
@@ -45,15 +50,21 @@ export default function SignupForm() {
   }
 
   function handleDoctorComplete(doctorData: DoctorStepTwoFormData) {
-    const data: combinedDoctorType = {
+    if (!stepOneData) {
+      toast.error("Step one data is missing");
+      setCurrentStep(1);
+      return;
+    }
+    const data: CombinedDoctorType = {
       ...stepOneData,
       ...doctorData,
-    } as combinedDoctorType;
+    };
 
     startTransition(async () => {
       const result = await SignupDoctor(data);
       if (result.success) {
         toast.success(result.message);
+        router.push("/doctor/dashboard");
       } else {
         toast.error(result.message);
       }

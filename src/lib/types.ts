@@ -1,63 +1,15 @@
 import * as z from "zod";
 
 //Auth types
-
-//Login types
-export const LoginSchema = z.object({
-  email: z.email("Please enter a valid email").max(50),
-  password: z.string().min(8, "Password must be at least 8 characters").max(20),
-  remember: z.boolean(),
-});
-export type TLoginSchema = z.infer<typeof LoginSchema>;
-
-//forgetpassword types
-export const ForgetPasswordSchema = z.object({
-  email: z.email("Please enter a valid email address").max(50),
-});
-export type TForgetPasswordSchema = z.infer<typeof ForgetPasswordSchema>;
-
-//Sign up types
-export const SignupSchema = z.object({
-  name: z.string().min(1, "Name is required").max(50),
-  email: z.email("Invalid email format").max(50),
-  password: z.string().min(8, "Password must be at least 8 characters").max(20),
-  image: z.string(),
-  role: z.enum(["PATIENT", "DOCTOR", "ADMIN"], {
-    error: "Please select a role",
-  }),
-});
-
-export type TSignUpSchema = z.infer<typeof SignupSchema>;
-
-//Reset password
-
-export const ResetPasswordSchema = z
-  .object({
-    password: z
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .max(20),
-    confirmPassword: z
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .max(20),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match!",
-    path: ["confirmPassword"],
-  });
-
-export type TResetPasswordSchema = z.infer<typeof ResetPasswordSchema>;
-
 //Signup
 
 export const stepOneSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.email("Invalid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
-  image: z.string(),
-  country: z.string(),
-  timeZone: z.string(),
+  image: z.url("Invalid image url").min(1, "image is required"),
+  country: z.string().min(2, "Country is required"),
+  timeZone: z.string().min(1, "Timezone is required"),
   role: z.enum(["PATIENT", "DOCTOR", "ADMIN"], {
     error: "Please select a role",
   }),
@@ -86,12 +38,44 @@ export const doctorStepTwoSchema = z.object({
   startTime: z.string(),
   endTime: z.string(),
 });
+//Login types
+export const LoginSchema = z.object({
+  email: z.email("Please enter a valid email").max(50),
+  password: z.string().min(8, "Password must be at least 8 characters").max(20),
+  remember: z.boolean(),
+});
+export type TLoginSchema = z.infer<typeof LoginSchema>;
+
+//forgetpassword types
+export const ForgetPasswordSchema = z.object({
+  email: z.email("Please enter a valid email address").max(50),
+});
+export type TForgetPasswordSchema = z.infer<typeof ForgetPasswordSchema>;
+
+//Reset password
+export const ResetPasswordSchema = z
+  .object({
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .max(20),
+    confirmPassword: z
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .max(20),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match!",
+    path: ["confirmPassword"],
+  });
+
+export type TResetPasswordSchema = z.infer<typeof ResetPasswordSchema>;
 
 //combined types
-export const combinedPatientSchema = stepOneSchema.and(patientStepTwoSchema);
-export type CombinedPatientType = z.infer<typeof combinedPatientSchema>;
-export const combinedDoctorSchema = stepOneSchema.and(doctorStepTwoSchema);
-export type combinedDoctorType = z.infer<typeof combinedDoctorSchema>;
+export const CombinedPatientSchema = stepOneSchema.and(patientStepTwoSchema);
+export type CombinedPatientType = z.infer<typeof CombinedPatientSchema>;
+export const CombinedDoctorSchema = stepOneSchema.and(doctorStepTwoSchema);
+export type CombinedDoctorType = z.infer<typeof CombinedDoctorSchema>;
 
 // TypeScript types derived from Zod schemas
 export type StepOneFormData = z.infer<typeof stepOneSchema>;

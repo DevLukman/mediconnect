@@ -41,11 +41,11 @@ import { toast } from "sonner";
 import { Notification } from "./Notification";
 import { Button } from "./ui/button";
 import { Spinner } from "./ui/spinner";
-type NavUser = {
+type NavUserProps = {
   username: string | null;
   image: string | null;
 };
-export function NavUser({ username, image }: NavUser) {
+export function NavUser({ username, image }: NavUserProps) {
   const router = useRouter();
   const pathname = usePathname().split("/")[1] as string;
   const { isMobile } = useSidebar();
@@ -56,7 +56,7 @@ export function NavUser({ username, image }: NavUser) {
     setTheme(theme === "dark" ? "light" : "dark");
   };
   async function handleLogout() {
-    toast.promise(
+    await toast.promise(
       Logout().then((result) => {
         if (result.success) {
           router.push("/login");
@@ -107,6 +107,7 @@ export function NavUser({ username, image }: NavUser) {
           <AlertDialogFooter>
             <AlertDialogCancel
               disabled={loading}
+              aria-disabled={loading}
               className="cursor-pointer min-w-24"
             >
               Cancel
@@ -114,10 +115,12 @@ export function NavUser({ username, image }: NavUser) {
             <Button
               onClick={handleDeleteAccount}
               disabled={loading}
+              aria-disabled={loading}
+              aria-busy={loading}
               className="flex items-center cursor-pointer justify-center min-w-24"
               variant="destructive"
             >
-              {loading ? <Spinner /> : "Continue"}
+              {loading ? <Spinner aria-label="Deleting account" /> : "Continue"}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -132,7 +135,11 @@ export function NavUser({ username, image }: NavUser) {
                   className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
                   <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarImage src={image!} alt={username!} />
+                    <AvatarImage
+                      src={image ?? undefined}
+                      alt={username ?? undefined}
+                      loading="lazy"
+                    />
                     <AvatarFallback className="rounded-lg">
                       {(username?.slice(0, 2) ?? "CN").toUpperCase()}
                     </AvatarFallback>
