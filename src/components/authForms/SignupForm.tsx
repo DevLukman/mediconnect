@@ -7,7 +7,6 @@ import {
   StepOneFormData,
 } from "@/lib/types";
 
-// import { Signup } from "@/lib/action/authAction";
 import { SignupDoctor, SignupPatient } from "@/lib/action/authAction";
 import { ArrowBigRight, Check } from "lucide-react";
 import Link from "next/link";

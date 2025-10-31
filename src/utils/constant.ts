@@ -73,3 +73,37 @@ export const DOCTOR_ROUTES = {
 } as const;
 
 export type DoctorRoute = (typeof DOCTOR_ROUTES)[keyof typeof DOCTOR_ROUTES];
+
+export const specialists = [
+  "Therapists",
+  "Cardiologist",
+  "Dermatologist",
+  "Pediatrician",
+  "Psychiatrist",
+  "Orthopedic",
+  "Neurologist",
+  "Gynecologist",
+  "Ophthalmologist",
+  "ENT Specialist",
+];
+
+export const bloodTypes = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+
+export const genotypes = ["AA", "AS", "SS"];
+export const genders = ["MALE", "FEMALE", "PREFER_NOT_TO_SAY", "OTHER"];
+
+export const getUserTimezone = () => {
+  return Intl.DateTimeFormat().resolvedOptions().timeZone;
+};
+
+export const getRandomAvatar = () => {
+  const seed = Math.random().toString(36).substring(7);
+  return `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}`;
+};
+
+export const MAX_FILE_SIZE: number = 8 * 1024 * 1024;
+export const ALLOWED_FILE_TYPES: string[] = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+];

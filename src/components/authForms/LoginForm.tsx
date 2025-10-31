@@ -18,7 +18,6 @@ import {
   FieldError,
   FieldGroup,
   FieldLabel,
-  FieldSet,
 } from "@/components/ui/field";
 import { Login } from "@/lib/action/authAction";
 import { LoginSchema, TLoginSchema } from "@/lib/types";
@@ -35,13 +34,14 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const {
-    register,
     handleSubmit,
     control,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<TLoginSchema>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
+      email: "",
+      password: "",
       remember: false,
     },
   });
@@ -56,104 +56,102 @@ export default function LoginForm() {
   }
   return (
     <form className="mt-8" onSubmit={handleSubmit(handleLogin)}>
-      <FieldSet>
-        <FieldGroup>
-          <Field>
-            <FieldLabel htmlFor="email">Email address</FieldLabel>
-            <Input
-              id="email"
-              type="email"
-              {...register("email")}
-              disabled={isSubmitting}
-            />
-            {errors.email?.message && (
-              <FieldError className="pl-1 text-sm text-destructive">
-                {errors.email.message}
-              </FieldError>
-            )}
-          </Field>
-          <Field>
-            <div className="flex justify-between items-center">
-              <FieldLabel htmlFor="password">Password</FieldLabel>
-              <Link
-                href={"/forgetpassword"}
-                className="text-sm underline text-primary"
-              >
-                Forgotpassword?
-              </Link>
-            </div>
-            <InputGroup>
-              <InputGroupInput
-                id="password"
-                type={showPassword ? "text" : "password"}
-                {...register("password")}
+      <FieldGroup>
+        <Controller
+          control={control}
+          name="email"
+          render={({ field, fieldState }) => (
+            <Field>
+              <FieldLabel htmlFor={field.name}>Email</FieldLabel>
+              <Input
+                {...field}
+                id={field.name}
+                aria-invalid={fieldState.invalid}
                 disabled={isSubmitting}
               />
-              <InputGroupAddon align="inline-end">
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <InputGroupButton
-                      className="border cursor-pointer"
-                      variant="ghost"
-                      aria-label="Info"
-                      size="icon-xs"
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      disabled={isSubmitting}
-                    >
-                      {showPassword ? (
-                        <EyeOff className="h-4 w-4" />
-                      ) : (
-                        <Eye className="h-4 w-4" />
-                      )}
-                    </InputGroupButton>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{showPassword ? "Hid password" : "Show password"}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </InputGroupAddon>
-            </InputGroup>
-            {errors.password?.message && (
-              <FieldError className="pl-1 text-sm text-destructive">
-                {errors.password.message}
-              </FieldError>
-            )}
-          </Field>
-          <FieldGroup>
-            <Field orientation={"horizontal"}>
-              <Controller
-                control={control}
-                name="remember"
-                render={({ field }) => (
-                  <Checkbox
-                    id="remember"
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                    disabled={isSubmitting}
-                  />
-                )}
-              />
-
-              <FieldLabel id="remember">Remember me</FieldLabel>
-              {errors.remember?.message && (
-                <FieldError className="pl-1 text-sm text-destructive">
-                  {errors.remember.message}
-                </FieldError>
-              )}
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
-          </FieldGroup>
-          <Field className="mt-2">
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              className="cursor-pointer"
-            >
-              {isSubmitting ? <Spinner /> : "Login"}
-            </Button>
-          </Field>
-        </FieldGroup>
-      </FieldSet>
+          )}
+        />
+        <Controller
+          control={control}
+          name="password"
+          render={({ field, fieldState }) => (
+            <Field>
+              <div className="flex justify-between items-center">
+                <FieldLabel htmlFor={field.name}>Password</FieldLabel>
+                <Link
+                  href={"/forgetpassword"}
+                  className="text-sm underline text-primary"
+                >
+                  Forgotpassword?
+                </Link>
+              </div>
+              <InputGroup>
+                <InputGroupInput
+                  {...field}
+                  id={field.name}
+                  type={showPassword ? "text" : "password"}
+                  aria-invalid={fieldState.invalid}
+                  disabled={isSubmitting}
+                />
+                <InputGroupAddon align="inline-end">
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <InputGroupButton
+                        className="border cursor-pointer"
+                        variant="ghost"
+                        aria-label="Info"
+                        size="icon-xs"
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        disabled={isSubmitting}
+                      >
+                        {showPassword ? (
+                          <EyeOff className="h-4 w-4" />
+                        ) : (
+                          <Eye className="h-4 w-4" />
+                        )}
+                      </InputGroupButton>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{showPassword ? "Hid password" : "Show password"}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </InputGroupAddon>
+              </InputGroup>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="remember"
+          render={({ field, fieldState }) => (
+            <Field orientation={"horizontal"}>
+              <Checkbox
+                id={field.name}
+                checked={field.value}
+                onCheckedChange={field.onChange}
+                disabled={isSubmitting}
+                aria-invalid={fieldState.invalid}
+              />
+              <FieldLabel htmlFor={field.name}>Remember me</FieldLabel>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+        <Field className="mt-2">
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="cursor-pointer"
+          >
+            {isSubmitting ? <Spinner /> : "Login"}
+          </Button>
+        </Field>
+      </FieldGroup>
     </form>
   );
 }

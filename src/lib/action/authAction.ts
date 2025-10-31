@@ -32,7 +32,7 @@ export async function Login(data: TLoginSchema) {
     console.error(error);
     return {
       success: false,
-      message: "There was an error with Log in",
+      message: "Invalid email or password",
     };
   }
 }
@@ -46,9 +46,9 @@ export async function SignupPatient(data: CombinedPatientType) {
   let userId: string | undefined;
   try {
     const { data: validData } = validation;
-    const { email, password, name, ...profile } = validData;
+    const { email, password, name, image, ...profile } = validData;
     const signupResponse = await auth.api.signUpEmail({
-      body: { email, password, name, role: "PATIENT" },
+      body: { email, password, name, image, role: "PATIENT" },
       headers: await headers(),
     });
 
@@ -100,9 +100,9 @@ export async function SignupDoctor(data: CombinedDoctorType) {
 
   try {
     const { data: validData } = validation;
-    const { email, password, name, ...profile } = validData;
+    const { email, password, name, image, ...profile } = validData;
     const signupResponse = await auth.api.signUpEmail({
-      body: { email, password, name, role: "DOCTOR" },
+      body: { email, password, name, image, role: "DOCTOR" },
       headers: await headers(),
     });
     userId = signupResponse.user?.id;

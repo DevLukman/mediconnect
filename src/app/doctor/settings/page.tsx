@@ -1,3 +1,6 @@
+import DoctorSettingForm from "@/components/doctorSettingForm";
+import { Separator } from "@/components/ui/separator";
+import { getDoctorProfile } from "@/lib/action/getDoctorProfile";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,6 +9,25 @@ export const metadata: Metadata = {
     "Manage your profile settings, preferences, and account information",
 };
 
-export default function Page() {
-  return <h1>Settings</h1>;
+export default async function Page() {
+  const doctorData = await getDoctorProfile();
+  return (
+    <section>
+      <div className="w-full">
+        <h1 className="font-bold text-2xl">Settings</h1>
+        <p className="text-sm font-normal text-muted-foreground mt-2">
+          Manage your account settings.
+        </p>
+        <Separator className="mt-4" />
+      </div>
+      <div className="w-full mt-8">
+        <h1 className="font-bold text-xl">Personal info</h1>
+        <p className="text-sm font-normal text-muted-foreground mt-2">
+          Update your photo and personal details here.
+        </p>
+        <Separator className="mt-4" />
+      </div>
+      <DoctorSettingForm doctorData={doctorData || null} />
+    </section>
+  );
 }

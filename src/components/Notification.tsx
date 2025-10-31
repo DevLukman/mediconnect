@@ -14,7 +14,11 @@ export function Notification() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost" aria-label="Open notifications">
+        <Button
+          variant="ghost"
+          className="cursor-pointer"
+          aria-label="Open notifications"
+        >
           <Bell aria-hidden="true" />
         </Button>
       </SheetTrigger>
