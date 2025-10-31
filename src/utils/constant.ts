@@ -101,7 +101,7 @@ export const getRandomAvatar = () => {
   return `https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}`;
 };
 
-export const MAX_FILE_SIZE: number = 8 * 1024 * 1024;
+export const MAX_FILE_SIZE: number = 4 * 1024 * 1024;
 export const ALLOWED_FILE_TYPES: string[] = [
   "image/jpeg",
   "image/png",

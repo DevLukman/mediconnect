@@ -126,7 +126,7 @@ export default function ResetPasswordForm() {
                       </InputGroupButton>
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>{showPassword ? "Hid password" : "Show password"}</p>
+                      <p>{showPassword ? "Hide password" : "Show password"}</p>
                     </TooltipContent>
                   </Tooltip>
                 </InputGroupAddon>

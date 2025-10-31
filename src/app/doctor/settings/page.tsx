@@ -10,7 +10,12 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const doctorData = await getDoctorProfile();
+  let doctorData = null;
+  try {
+    doctorData = await getDoctorProfile();
+  } catch (error) {
+    console.error("Failed to load doctor profile:", error);
+  }
   return (
     <section>
       <div className="w-full">
