@@ -38,13 +38,11 @@ export function useFileSelect<T extends Record<string, unknown>>(
 
     const file = files[0];
 
-    // Validate file size
     if (file.size > maxFileSize) {
       toast.error(`File is too large (max ${maxFileSize / (1024 * 1024)}MB)`);
       return;
     }
 
-    // Validate file type
     if (!allowedFileTypes.includes(file.type)) {
       toast.error("Invalid format. Please use JPEG, PNG, or WebP.");
       return;
@@ -54,7 +52,11 @@ export function useFileSelect<T extends Record<string, unknown>>(
       const uploadedImages = await startUpload([file]);
       if (uploadedImages && uploadedImages[0]) {
         const imageUrl = uploadedImages[0].ufsUrl;
-        setValue(fieldName, imageUrl as PathValue<T, Path<T>>);
+        setValue(fieldName, imageUrl as PathValue<T, Path<T>>, {
+          shouldDirty: true,
+          shouldTouch: true,
+          shouldValidate: true,
+        });
 
         // Call optional success callback
         if (onSuccess) {

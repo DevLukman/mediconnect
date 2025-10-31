@@ -245,7 +245,7 @@ export const countries: Country[] = [
   { name: "Tanzania", flag: "https://flagcdn.com/tz.svg" },
   { name: "Thailand", flag: "https://flagcdn.com/th.svg" },
   { name: "Timor-Leste", flag: "https://flagcdn.com/tl.svg" },
-  { name: "Togo", flag: "https://flagcdn.com/tg.vue" }, // correction: .svg
+  { name: "Togo", flag: "https://flagcdn.com/tg.svg" },
   { name: "Tokelau", flag: "https://flagcdn.com/tk.svg" },
   { name: "Tonga", flag: "https://flagcdn.com/to.svg" },
   { name: "Trinidad and Tobago", flag: "https://flagcdn.com/tt.svg" },

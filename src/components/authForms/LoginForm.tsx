@@ -68,6 +68,7 @@ export default function LoginForm() {
                 id={field.name}
                 aria-invalid={fieldState.invalid}
                 disabled={isSubmitting}
+                type="email"
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>

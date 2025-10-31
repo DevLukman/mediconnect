@@ -3,7 +3,7 @@ import * as z from "zod";
 //Signup
 export const stepOneSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.email("Please enter a valid email address").max(50),
+  email: z.email("Please enter a valid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
   image: z.url("image is required"),
   country: z.string().min(2, "Country is required"),
@@ -39,22 +39,18 @@ export const doctorStepTwoSchema = z.object({
   endTime: z.string("End time is required"),
 });
 
-/////////////////////////////////////////////////////
-
 //Login types
 export const LoginSchema = z.object({
   email: z.email("Please enter a valid email").max(50),
   password: z.string().min(8, "Password must be at least 8 characters").max(20),
   remember: z.boolean(),
 });
-export type TLoginSchema = z.infer<typeof LoginSchema>;
 
-/////////////////////////////////////
 //forgetpassword types
 export const ForgetPasswordSchema = z.object({
   email: z.email("Please enter a valid email address").max(50),
 });
-export type TForgetPasswordSchema = z.infer<typeof ForgetPasswordSchema>;
+
 //Reset password
 export const ResetPasswordSchema = z
   .object({
@@ -72,19 +68,6 @@ export const ResetPasswordSchema = z
     path: ["confirmPassword"],
   });
 
-export type TResetPasswordSchema = z.infer<typeof ResetPasswordSchema>;
-
-//combined types
-export const CombinedPatientSchema = stepOneSchema.and(patientStepTwoSchema);
-export const CombinedDoctorSchema = stepOneSchema.and(doctorStepTwoSchema);
-export type CombinedPatientType = z.infer<typeof CombinedPatientSchema>;
-export type CombinedDoctorType = z.infer<typeof CombinedDoctorSchema>;
-
-// TypeScript types derived from Zod schemas
-export type StepOneFormData = z.infer<typeof stepOneSchema>;
-export type PatientStepTwoFormData = z.infer<typeof patientStepTwoSchema>;
-export type DoctorStepTwoFormData = z.infer<typeof doctorStepTwoSchema>;
-
 export const DoctorProfileSchema = z.object({
   image: z.url("Invalid image URL"),
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -101,7 +84,6 @@ export const DoctorProfileSchema = z.object({
   bio: z.string().min(10, "Bio must be at least 10 characters"),
 });
 
-export type DoctorProfileFormData = z.infer<typeof DoctorProfileSchema>;
 export const PatientProfileSchema = z.object({
   image: z.url("Invalid image URL"),
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -117,4 +99,16 @@ export const PatientProfileSchema = z.object({
   occupation: z.string().min(2, "Occupation is required"),
 });
 
+// TypeScript types derived from Zod schemas
+export type TLoginSchema = z.infer<typeof LoginSchema>;
+export type TForgetPasswordSchema = z.infer<typeof ForgetPasswordSchema>;
+export type StepOneFormData = z.infer<typeof stepOneSchema>;
+export type PatientStepTwoFormData = z.infer<typeof patientStepTwoSchema>;
+export type DoctorStepTwoFormData = z.infer<typeof doctorStepTwoSchema>;
 export type PatientProfileFormData = z.infer<typeof PatientProfileSchema>;
+export const CombinedPatientSchema = stepOneSchema.and(patientStepTwoSchema);
+export const CombinedDoctorSchema = stepOneSchema.and(doctorStepTwoSchema);
+export type CombinedPatientType = z.infer<typeof CombinedPatientSchema>;
+export type CombinedDoctorType = z.infer<typeof CombinedDoctorSchema>;
+export type TResetPasswordSchema = z.infer<typeof ResetPasswordSchema>;
+export type DoctorProfileFormData = z.infer<typeof DoctorProfileSchema>;
