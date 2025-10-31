@@ -40,6 +40,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Notification } from "./Notification";
 import { Button } from "./ui/button";
+import { Separator } from "./ui/separator";
 import { Spinner } from "./ui/spinner";
 type NavUserProps = {
   username: string | null;
@@ -125,105 +126,108 @@ export function NavUser({ username, image }: NavUserProps) {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-      <div className="flex items-center">
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton
-                  size="lg"
-                  className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+      <div>
+        <Separator />
+        <div className="flex items-center">
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild className="cursor-pointer">
+                  <SidebarMenuButton
+                    size="lg"
+                    className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                  >
+                    <Avatar className="h-8 w-8 rounded-lg">
+                      <AvatarImage
+                        src={image ?? undefined}
+                        alt={username ?? "user"}
+                        loading="lazy"
+                      />
+                      <AvatarFallback className="rounded-lg">
+                        {(username?.slice(0, 2) ?? "CN").toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="grid flex-1 text-left text-sm leading-tight">
+                      <span className="truncate font-medium text-sm">
+                        {username}
+                      </span>
+                    </div>
+                    <ChevronsUpDown className="ml-auto size-4" />
+                  </SidebarMenuButton>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent
+                  className="w-[--radix-dropdown-menu-trigger-width] min-w-56 mx-2 rounded-lg"
+                  side={isMobile ? "bottom" : "top"}
+                  align="end"
+                  sideOffset={4}
                 >
-                  <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarImage
-                      src={image ?? undefined}
-                      alt={username ?? undefined}
-                      loading="lazy"
-                    />
-                    <AvatarFallback className="rounded-lg">
-                      {(username?.slice(0, 2) ?? "CN").toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-medium text-sm">
-                      {username}
-                    </span>
-                  </div>
-                  <ChevronsUpDown className="ml-auto size-4" />
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
-
-              <DropdownMenuContent
-                className="w-[--radix-dropdown-menu-trigger-width] min-w-56 mx-2 rounded-lg"
-                side={isMobile ? "bottom" : "top"}
-                align="end"
-                sideOffset={4}
-              >
-                <DropdownMenuGroup>
-                  <Link
-                    href={`/${pathname}/dashboard`}
-                    className="flex items-center gap-2"
-                  >
-                    <DropdownMenuItem className="focus:bg-primary w-full cursor-pointer focus:text-secondary">
-                      <HouseHeart />
-                      <span>Home</span>
-                    </DropdownMenuItem>
-                  </Link>
-                  <Link
-                    href={`/${pathname}/settings`}
-                    className="flex items-center gap-2"
-                  >
-                    <DropdownMenuItem className="focus:bg-primary w-full cursor-pointer focus:text-secondary">
-                      <UserRoundPen />
-                      <span>Profile</span>
-                    </DropdownMenuItem>
-                  </Link>
-                  <Link href={"/"} className="flex items-center gap-2">
-                    <DropdownMenuItem
-                      className="focus:bg-primary w-full
-                      cursor-pointer focus:text-secondary"
+                  <DropdownMenuGroup>
+                    <Link
+                      href={`/${pathname}/dashboard`}
+                      className="flex items-center gap-2"
                     >
-                      <Headset />
-                      <span>Customer support</span>
+                      <DropdownMenuItem className="focus:bg-primary w-full cursor-pointer focus:text-secondary">
+                        <HouseHeart />
+                        <span>Home</span>
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link
+                      href={`/${pathname}/settings`}
+                      className="flex items-center gap-2"
+                    >
+                      <DropdownMenuItem className="focus:bg-primary w-full cursor-pointer focus:text-secondary">
+                        <UserRoundPen />
+                        <span>Profile</span>
+                      </DropdownMenuItem>
+                    </Link>
+                    <Link href={"/"} className="flex items-center gap-2">
+                      <DropdownMenuItem
+                        className="focus:bg-primary w-full
+                      cursor-pointer focus:text-secondary"
+                      >
+                        <Headset />
+                        <span>Customer support</span>
+                      </DropdownMenuItem>
+                    </Link>
+                  </DropdownMenuGroup>
+
+                  <DropdownMenuSeparator />
+
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem
+                      className="focus:bg-primary cursor-pointer focus:text-secondary"
+                      onClick={handleToggleTheme}
+                    >
+                      <Moon />
+                      Toggle Theme
                     </DropdownMenuItem>
-                  </Link>
-                </DropdownMenuGroup>
 
-                <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      onClick={handleLogout}
+                      className="focus:bg-primary cursor-pointer focus:text-secondary"
+                    >
+                      <LogOut />
+                      Log out
+                    </DropdownMenuItem>
 
-                <DropdownMenuGroup>
-                  <DropdownMenuItem
-                    className="focus:bg-primary cursor-pointer focus:text-secondary"
-                    onClick={handleToggleTheme}
-                  >
-                    <Moon />
-                    Toggle Theme
-                  </DropdownMenuItem>
+                    {/* Open Delete Dialog */}
+                    <DropdownMenuItem
+                      onClick={() => setOpen(true)}
+                      className="focus:bg-destructive cursor-pointer hover:text-secondary focus:text-secondary"
+                    >
+                      <Trash />
+                      Delete Account
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
 
-                  <DropdownMenuItem
-                    onClick={handleLogout}
-                    className="focus:bg-primary cursor-pointer focus:text-secondary"
-                  >
-                    <LogOut />
-                    Log out
-                  </DropdownMenuItem>
-
-                  {/* Open Delete Dialog */}
-                  <DropdownMenuItem
-                    onClick={() => setOpen(true)}
-                    className="focus:bg-destructive cursor-pointer hover:text-secondary focus:text-secondary"
-                  >
-                    <Trash />
-                    Delete Account
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-
-                <DropdownMenuSeparator />
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </SidebarMenuItem>
-        </SidebarMenu>
-        <Notification />
+                  <DropdownMenuSeparator />
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </SidebarMenuItem>
+          </SidebarMenu>
+          <Notification />
+        </div>
       </div>
     </>
   );

@@ -23,7 +23,7 @@ export default async function RootLayout({
       <DashboardSidebar username={username} image={image} />
       <SidebarInset>
         <DashboardHeader />
-        <main className="px-8 py-2">{children}</main>
+        <main className="px-9">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );
