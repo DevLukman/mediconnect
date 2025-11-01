@@ -1,4 +1,6 @@
+import { useId } from "react";
 export function GridPatterns() {
+  const id = useId();
   return (
     <svg
       width="480"
@@ -8,7 +10,7 @@ export function GridPatterns() {
       xmlns="http://www.w3.org/2000/svg"
     >
       <mask
-        id="mask0_1245_184545"
+        id={`mask0_${id}`}
         style={{ maskType: "alpha" }}
         maskUnits="userSpaceOnUse"
         x="0"
@@ -16,11 +18,11 @@ export function GridPatterns() {
         width="480"
         height="480"
       >
-        <rect width="480" height="480" fill="url(#paint0_radial_1245_184545)" />
+        <rect width="480" height="480" fill={`url(#paint0_radial_${id})`} />
       </mask>
-      <g mask="url(#mask0_1245_184545)">
-        <g clipPath="url(#clip0_1245_184545)">
-          <g clipPath="url(#clip1_1245_184545)">
+      <g mask={`url(#mask0_${id})`}>
+        <g clipPath={`url(#clip0_${id})`}>
+          <g clipPath={`url(#clip1_${id})`}>
             <line x1="0.5" x2="0.5" y2="480" stroke="#EAECF0" />
             <line x1="32.5" x2="32.5" y2="480" stroke="#EAECF0" />
             <line x1="64.5" x2="64.5" y2="480" stroke="#EAECF0" />
@@ -38,7 +40,7 @@ export function GridPatterns() {
             <line x1="448.5" x2="448.5" y2="480" stroke="#EAECF0" />
           </g>
           <rect x="0.5" y="0.5" width="479" height="479" stroke="#EAECF0" />
-          <g clipPath="url(#clip2_1245_184545)">
+          <g clipPath={`url(#clip2_${id})`}>
             <line y1="31.5" x2="480" y2="31.5" stroke="#EAECF0" />
             <line y1="63.5" x2="480" y2="63.5" stroke="#EAECF0" />
             <line y1="95.5" x2="480" y2="95.5" stroke="#EAECF0" />
@@ -55,12 +57,11 @@ export function GridPatterns() {
             <line y1="447.5" x2="480" y2="447.5" stroke="#EAECF0" />
             <line y1="479.5" x2="480" y2="479.5" stroke="#EAECF0" />
           </g>
-          <rect x="0.5" y="0.5" width="479" height="479" stroke="#EAECF0" />
         </g>
       </g>
       <defs>
         <radialGradient
-          id="paint0_radial_1245_184545"
+          id={`paint0_radial_${id}`}
           cx="0"
           cy="0"
           r="1"
@@ -70,13 +71,7 @@ export function GridPatterns() {
           <stop />
           <stop offset="1" stopOpacity="0" />
         </radialGradient>
-        <clipPath id="clip0_1245_184545">
-          <rect width="480" height="480" fill="white" />
-        </clipPath>
-        <clipPath id="clip1_1245_184545">
-          <rect width="480" height="480" fill="white" />
-        </clipPath>
-        <clipPath id="clip2_1245_184545">
+        <clipPath id={`clip2_${id}`}>
           <rect width="480" height="480" fill="white" />
         </clipPath>
       </defs>

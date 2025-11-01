@@ -31,14 +31,18 @@ import {
   SelectValue,
 } from "./ui/select";
 import { DURATIONS } from "@/utils/constant";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Calendar } from "./ui/calendar";
 import { Spinner } from "./ui/spinner";
 
 export function DoctorBookingsForm() {
   const [open, setOpen] = useState(false);
-
+  const today = useMemo(() => {
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }, []);
   const {
     handleSubmit,
     control,
@@ -49,11 +53,11 @@ export function DoctorBookingsForm() {
   } = useForm<DoctorBookingsTypes>({
     resolver: zodResolver(DoctorBookings),
     defaultValues: {
-      patientId: undefined,
-      appointmentDate: undefined,
-      appointmentDuration: undefined,
-      appointmentTime: undefined,
-      reasonForVisit: undefined,
+      patientId: "",
+      appointmentDate: "",
+      appointmentDuration: "",
+      appointmentTime: "",
+      reasonForVisit: "",
     },
   });
 
@@ -104,7 +108,7 @@ export function DoctorBookingsForm() {
                       type="text"
                     />
                     <FieldDescription>
-                      A 6-digit number used for identifying patients
+                      A unique identifier for the patient (up to 10 characters)
                     </FieldDescription>
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -152,8 +156,6 @@ export function DoctorBookingsForm() {
                               }
                               captionLayout="dropdown"
                               disabled={(date) => {
-                                const today = new Date();
-                                today.setHours(0, 0, 0, 0);
                                 return date < today;
                               }}
                               onSelect={(date) => {

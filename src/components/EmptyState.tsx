@@ -11,7 +11,7 @@ export function EmptyState() {
     <TableRow>
       <TableCell colSpan={10} className="text-center">
         <div className="relative flex h-full flex-col items-center justify-center py-4">
-          {theme === "light" && (
+          {theme === "dark" && (
             <div className="absolute inset-0 flex items-center justify-center overflow-hidden opacity-30">
               <GridPatterns />
             </div>
