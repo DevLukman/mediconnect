@@ -101,10 +101,10 @@ export const PatientProfileSchema = z.object({
 
 //Doctor bookings
 export const DoctorBookings = z.object({
-  patientId: z.string("Patient ID is required").max(10),
-  appointmentDate: z.string(),
-  appointmentTime: z.string(),
-  appointmentDuration: z.string("Duration is requied"),
+  patientId: z.string("Patient ID is required").max(6),
+  appointmentDate: z.string("Appointment date is required"),
+  appointmentTime: z.string("Appointment time is required"),
+  appointmentDuration: z.string("Duration is required"),
   reasonForVisit: z.string("Reason for visit is required").max(200),
 });
 

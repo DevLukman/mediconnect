@@ -18,7 +18,8 @@ export default function ErrorBoundary({ error, reset }: ErrorBoundary) {
   return (
     <div className="flex h-dvh w-full flex-col items-center justify-center gap-4">
       <p className="font-inter text-center text-xl text-red-500">
-        Oops, something when wrong. But Don&apos;t wrong-it not your fault.
+        Oops, something went wrong. But don&apos;t worry—it&apos;s not your
+        fault.
       </p>
       <button
         onClick={reload}

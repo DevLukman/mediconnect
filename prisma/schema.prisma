@@ -166,7 +166,7 @@ model Appointment {
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @default(now()) @updatedAt
   appointmentDate DateTime          @db.Date
-  appontmentDuration DateTime         @db.Date
+  appointmentDuration String
   patient         Patient           @relation(fields: [patientId], references: [id])
   doctor          Doctor            @relation(fields: [doctorId], references: [id])
   payment         Payment?

@@ -11,6 +11,7 @@ import { CalendarPlus2, EllipsisVertical } from "lucide-react";
 import DatePicker from "./DatePicker";
 import { DoctorBookingsForm } from "./DoctorBookingsForm";
 import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
 
 export default function DoctorAppointmentContent() {
   return (
@@ -70,7 +71,14 @@ export default function DoctorAppointmentContent() {
                 <Badge variant={"outline"}>Past</Badge>
               </TableCell>
               <TableCell>
-                <EllipsisVertical size={14} cursor={"pointer"} />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  aria-label="Open appointment actions menu"
+                  className="size-6 cursor-pointer"
+                >
+                  <EllipsisVertical size={14} />
+                </Button>
               </TableCell>
             </TableRow>
 

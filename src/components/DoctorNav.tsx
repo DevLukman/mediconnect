@@ -31,7 +31,7 @@ export function DoctorNav() {
             >
               <SidebarMenuButton
                 tooltip={item.name}
-                className="pointer-events-none cursor-pointer"
+                className="pointer-events-none"
               >
                 {item.icon && <item.icon />}
                 <span className="text-sm capitalize">{item.name}</span>
