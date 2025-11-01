@@ -79,11 +79,11 @@ export default function LoginForm() {
           name="password"
           render={({ field, fieldState }) => (
             <Field>
-              <div className="flex justify-between items-center">
+              <div className="flex items-center justify-between">
                 <FieldLabel htmlFor={field.name}>Password</FieldLabel>
                 <Link
                   href={"/forgetpassword"}
-                  className="text-sm underline text-primary"
+                  className="text-primary text-sm underline"
                 >
                   Forgotpassword?
                 </Link>
@@ -100,7 +100,7 @@ export default function LoginForm() {
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <InputGroupButton
-                        className="border cursor-pointer"
+                        className="cursor-pointer border"
                         variant="ghost"
                         aria-label="Info"
                         size="icon-xs"

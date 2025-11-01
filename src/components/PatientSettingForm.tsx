@@ -352,16 +352,16 @@ export default function PatientSettingForm({
         <div>
           <div className="pb-3">
             <h3>Your Photo </h3>
-            <p className="text-sm font-normal text-foreground/50">
+            <p className="text-foreground/50 text-sm font-normal">
               This will be displayed on your profile.
             </p>
-            <Avatar className="size-14 mt-4">
+            <Avatar className="mt-4 size-14">
               <AvatarImage
                 src={imageValue}
                 alt="@shadcn"
                 className="object-cover"
               />
-              <AvatarFallback className="uppercase text-2xl">
+              <AvatarFallback className="text-2xl uppercase">
                 {/* {doctorData?.email.split("")[0]} */}
                 CN
               </AvatarFallback>
@@ -408,11 +408,11 @@ export default function PatientSettingForm({
           </Field>
         </div>
       </FieldGroup>
-      <div className="flex items-center gap-6 mt-6">
+      <div className="mt-6 flex items-center gap-6">
         <Button
           type="reset"
           variant={"ghost"}
-          className="max-w-full cursor-pointer flex-1"
+          className="max-w-full flex-1 cursor-pointer"
           disabled={isSubmitting}
           onClick={() => reset()}
         >
@@ -420,7 +420,7 @@ export default function PatientSettingForm({
         </Button>
         <Button
           type="submit"
-          className="cursor-pointer flex-1"
+          className="flex-1 cursor-pointer"
           disabled={isSubmitting}
         >
           {isSubmitting ? <Spinner /> : "Update"}

@@ -95,7 +95,7 @@ const FieldGroup = ({ className, ...props }: GroupProps) => {
         fieldGroupStyles({
           ...renderProps,
           className,
-        })
+        }),
       )}
     />
   );

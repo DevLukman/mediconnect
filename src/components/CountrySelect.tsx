@@ -53,7 +53,7 @@ export function CountrySelect({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className={cn("w-full justify-between cursor-text", className)}
+          className={cn("w-full cursor-text justify-between", className)}
           disabled={disabled}
         >
           {selectedCountry ? (
@@ -92,14 +92,14 @@ export function CountrySelect({
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === country.name ? "opacity-100" : "opacity-0"
+                      value === country.name ? "opacity-100" : "opacity-0",
                     )}
                   />
                   <Image
                     src={country.flag}
                     width={20}
                     height={20}
-                    className="object-cover rounded-sm mr-2"
+                    className="mr-2 rounded-sm object-cover"
                     alt={country.name}
                   />
                   <span>{country.name}</span>

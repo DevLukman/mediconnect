@@ -26,12 +26,12 @@ export function DoctorNav() {
                   pathname.startsWith(item.url)
                     ? "bg-primary text-secondary"
                     : "hover:bg-secondary"
-                } transition-all ease-in-out py-1`
+                } py-1 transition-all ease-in-out`,
               )}
             >
               <SidebarMenuButton
                 tooltip={item.name}
-                className="cursor-pointer pointer-events-none"
+                className="pointer-events-none cursor-pointer"
               >
                 {item.icon && <item.icon />}
                 <span className="text-sm capitalize">{item.name}</span>

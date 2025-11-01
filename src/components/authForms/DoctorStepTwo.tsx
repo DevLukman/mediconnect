@@ -153,7 +153,7 @@ export default function DoctorStepTwo({
                       id={field.name}
                       disabled={isSubmitting}
                       step="1"
-                      className="bg-background appearance-none mt-1 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
+                      className="bg-background mt-1 appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -176,7 +176,7 @@ export default function DoctorStepTwo({
                       id={field.name}
                       disabled={isSubmitting}
                       step="1"
-                      className="bg-background appearance-none mt-1 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
+                      className="bg-background mt-1 appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -212,7 +212,7 @@ export default function DoctorStepTwo({
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="cursor-pointer w-full"
+            className="w-full cursor-pointer"
           >
             {isSubmitting ? <Spinner /> : "Sign up"}
           </Button>

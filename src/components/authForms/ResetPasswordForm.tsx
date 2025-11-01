@@ -138,7 +138,7 @@ export default function ResetPasswordForm() {
           )}
         />
         <div className="mt-2 w-full">
-          <Button type="submit" className="cursor-pointer w-full">
+          <Button type="submit" className="w-full cursor-pointer">
             {isSubmitting ? <Spinner /> : "Reset password"}
           </Button>
         </div>

@@ -46,9 +46,14 @@ type NavUserProps = {
   username: string | null;
   image: string | null;
 };
+type AppRoute = "/doctor/dashboard" | "/patient/dashboard" | "/admin/dashboard";
 export function NavUser({ username, image }: NavUserProps) {
   const router = useRouter();
-  const pathname = usePathname().split("/")[1] as string;
+  const pathname = usePathname().split("/")[1] as
+    | "doctor"
+    | "patient"
+    | "admin";
+
   const { isMobile } = useSidebar();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -69,7 +74,7 @@ export function NavUser({ username, image }: NavUserProps) {
         loading: "Logging out...",
         success: (result) => result.message || "Successfully logged out!",
         error: (err) => err.message || "Failed to logout",
-      }
+      },
     );
   }
 
@@ -85,9 +90,8 @@ export function NavUser({ username, image }: NavUserProps) {
       }
     } catch (err) {
       const e = err as Error;
-      toast.error(
-        e.message || "Something went wrong while deleting your account."
-      );
+      console.error(e.message);
+      toast.error("Something went wrong while deleting your account.");
     } finally {
       setLoading(false);
       setOpen(false);
@@ -109,7 +113,7 @@ export function NavUser({ username, image }: NavUserProps) {
             <AlertDialogCancel
               disabled={loading}
               aria-disabled={loading}
-              className="cursor-pointer min-w-24"
+              className="min-w-24 cursor-pointer"
             >
               Cancel
             </AlertDialogCancel>
@@ -118,7 +122,7 @@ export function NavUser({ username, image }: NavUserProps) {
               disabled={loading}
               aria-disabled={loading}
               aria-busy={loading}
-              className="flex items-center cursor-pointer justify-center min-w-24"
+              className="flex min-w-24 cursor-pointer items-center justify-center"
               variant="destructive"
             >
               {loading ? <Spinner aria-label="Deleting account" /> : "Continue"}
@@ -148,7 +152,7 @@ export function NavUser({ username, image }: NavUserProps) {
                       </AvatarFallback>
                     </Avatar>
                     <div className="grid flex-1 text-left text-sm leading-tight">
-                      <span className="truncate font-medium text-sm">
+                      <span className="truncate text-sm font-medium">
                         {username}
                       </span>
                     </div>
@@ -157,35 +161,35 @@ export function NavUser({ username, image }: NavUserProps) {
                 </DropdownMenuTrigger>
 
                 <DropdownMenuContent
-                  className="w-[--radix-dropdown-menu-trigger-width] min-w-56 mx-2 rounded-lg"
+                  className="mx-2 w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
                   side={isMobile ? "bottom" : "top"}
                   align="end"
                   sideOffset={4}
                 >
                   <DropdownMenuGroup>
                     <Link
-                      href={`/${pathname}/dashboard`}
+                      href={`/${pathname}/dashboard` as AppRoute}
                       className="flex items-center gap-2"
                     >
-                      <DropdownMenuItem className="focus:bg-primary w-full cursor-pointer focus:text-secondary">
+                      <DropdownMenuItem className="focus:bg-primary focus:text-secondary w-full cursor-pointer">
                         <HouseHeart />
                         <span>Home</span>
                       </DropdownMenuItem>
                     </Link>
                     <Link
-                      href={`/${pathname}/settings`}
+                      href={`/${pathname}/settings` as AppRoute}
                       className="flex items-center gap-2"
                     >
-                      <DropdownMenuItem className="focus:bg-primary w-full cursor-pointer focus:text-secondary">
+                      <DropdownMenuItem className="focus:bg-primary focus:text-secondary w-full cursor-pointer">
                         <UserRoundPen />
                         <span>Profile</span>
                       </DropdownMenuItem>
                     </Link>
-                    <Link href={"/"} className="flex items-center gap-2">
-                      <DropdownMenuItem
-                        className="focus:bg-primary w-full
-                      cursor-pointer focus:text-secondary"
-                      >
+                    <Link
+                      href={`/${pathname}/settings` as AppRoute}
+                      className="flex items-center gap-2"
+                    >
+                      <DropdownMenuItem className="focus:bg-primary focus:text-secondary w-full cursor-pointer">
                         <Headset />
                         <span>Customer support</span>
                       </DropdownMenuItem>
@@ -196,7 +200,7 @@ export function NavUser({ username, image }: NavUserProps) {
 
                   <DropdownMenuGroup>
                     <DropdownMenuItem
-                      className="focus:bg-primary cursor-pointer focus:text-secondary"
+                      className="focus:bg-primary focus:text-secondary cursor-pointer"
                       onClick={handleToggleTheme}
                     >
                       <Moon />
@@ -205,7 +209,7 @@ export function NavUser({ username, image }: NavUserProps) {
 
                     <DropdownMenuItem
                       onClick={handleLogout}
-                      className="focus:bg-primary cursor-pointer focus:text-secondary"
+                      className="focus:bg-primary focus:text-secondary cursor-pointer"
                     >
                       <LogOut />
                       Log out
@@ -214,7 +218,7 @@ export function NavUser({ username, image }: NavUserProps) {
                     {/* Open Delete Dialog */}
                     <DropdownMenuItem
                       onClick={() => setOpen(true)}
-                      className="focus:bg-destructive cursor-pointer hover:text-secondary focus:text-secondary"
+                      className="focus:bg-destructive hover:text-secondary focus:text-secondary cursor-pointer"
                     >
                       <Trash />
                       Delete Account
