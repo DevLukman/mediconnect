@@ -31,12 +31,12 @@ export function PatientNav() {
               "rounded-lg py-1 transition-all ease-in-out",
               pathname === item.url
                 ? "bg-primary text-secondary"
-                : "hover:bg-secondary"
+                : "hover:bg-secondary",
             )}
           >
             <SidebarMenuButton
               tooltip={item.name}
-              className="cursor-pointer pointer-events-none"
+              className="pointer-events-none cursor-pointer"
             >
               {item.icon && <item.icon />}
               <span className="text-sm capitalize">{item.name}</span>

@@ -143,7 +143,7 @@ export default function StepOneForm({ onComplete }: StepOneProps) {
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <InputGroupButton
-                            className="border cursor-pointer"
+                            className="cursor-pointer border"
                             variant="ghost"
                             aria-label="Info"
                             size="icon-xs"
@@ -205,7 +205,7 @@ export default function StepOneForm({ onComplete }: StepOneProps) {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="cursor-pointer w-full"
+              className="w-full cursor-pointer"
             >
               {isSubmitting ? <Spinner /> : " Next"}
             </Button>

@@ -107,3 +107,5 @@ export const ALLOWED_FILE_TYPES: string[] = [
   "image/png",
   "image/webp",
 ];
+
+export const DURATIONS = ["30", "60", "90", "120", "150", "180"];

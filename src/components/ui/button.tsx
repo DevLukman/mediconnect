@@ -33,7 +33,7 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  }
+  },
 );
 
 function Button({
@@ -53,7 +53,7 @@ function Button({
       data-slot="button"
       className={cn(
         "disabled:cursor-not-allowed",
-        buttonVariants({ variant, size, className })
+        buttonVariants({ variant, size, className }),
       )}
       {...props}
     />

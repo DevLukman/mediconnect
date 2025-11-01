@@ -75,20 +75,20 @@ export default function SignupForm() {
   }
   return (
     <>
-      <div className="flex items-center justify-center gap-5 mt-4">
+      <div className="mt-4 flex items-center justify-center gap-5">
         <div
-          className="flex items-center gap-2 cursor-pointer"
+          className="flex cursor-pointer items-center gap-2"
           onClick={handleBack}
         >
           {stepOneData !== null ? (
             <span
-              className={`text-sm border rounded-full bg-green-600 px-1.5 py-1.5 items-center`}
+              className={`items-center rounded-full border bg-green-600 px-1.5 py-1.5 text-sm`}
             >
               <Check size={14} className="text-secondary" />
             </span>
           ) : (
             <span
-              className={`text-sm border rounded-full px-2.5 py-0.5 items-center`}
+              className={`items-center rounded-full border px-2.5 py-0.5 text-sm`}
             >
               1
             </span>
@@ -100,7 +100,7 @@ export default function SignupForm() {
         </span>
         <div className="flex items-center gap-2">
           <span
-            className={`text-sm border rounded-full  px-2.5 py-0.5 items-center`}
+            className={`items-center rounded-full border px-2.5 py-0.5 text-sm`}
           >
             2
           </span>
@@ -121,8 +121,8 @@ export default function SignupForm() {
         />
       )}
 
-      <div className="py-4 ">
-        <p className="flex items-center justify-center gap-2 text-sm mt-3">
+      <div className="py-4">
+        <p className="mt-3 flex items-center justify-center gap-2 text-sm">
           <span> Already have an account?</span>
           <Link href={"/login"} className="text-primary">
             Login

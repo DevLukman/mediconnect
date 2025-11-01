@@ -55,11 +55,11 @@ export default function ForgetPasswordForm() {
           </Field>
         )}
       />
-      <div className="w-full mt-4">
+      <div className="mt-4 w-full">
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="cursor-pointer w-full"
+          className="w-full cursor-pointer"
         >
           {isSubmitting ? <Spinner /> : "Send Reset link"}
         </Button>
