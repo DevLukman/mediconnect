@@ -10,7 +10,6 @@ import {
   CalendarPlus2,
   EllipsisVertical,
   PlusCircle,
-  Search,
   SearchIcon,
 } from "lucide-react";
 import Form from "next/form";
@@ -26,7 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-export default function PatientAppointmentContext() {
+export default function PatientAppointmentContent() {
   return (
     <div>
       <div className="flex w-full flex-col gap-4 md:flex-row md:justify-between">
@@ -73,7 +72,7 @@ export default function PatientAppointmentContext() {
           </InputGroup>
 
           <Button>
-            <Search />
+            <SearchIcon />
           </Button>
         </Form>
 

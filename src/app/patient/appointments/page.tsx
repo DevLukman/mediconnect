@@ -1,4 +1,4 @@
-import PatientAppointmentContext from "@/components/PatientAppointmentContext";
+import PatientAppointmentContent from "@/components/PatientAppointmentContent";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <PatientAppointmentContext />;
+  return <PatientAppointmentContent />;
 }
