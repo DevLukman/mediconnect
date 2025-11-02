@@ -38,7 +38,7 @@ export default function DatePicker({
 
   function formatShortDate(date: Date | undefined): string {
     if (!date || !isValid(date)) return "";
-    return format(date, "M/d/yy");
+    return format(date, "m/d/yy");
   }
 
   const currentDateFormatted = format(new Date(), "M/d/yy");
@@ -74,7 +74,7 @@ export default function DatePicker({
       setError("");
       onChange?.(parsedDate);
     } else {
-      setError("Invalid date format. Use M/D/YY (e.g., 1/15/25)");
+      setError("Invalid date format. Use M/d/YY (e.g., 1/15/25)");
       setInputValue(formatShortDate(date));
     }
   }

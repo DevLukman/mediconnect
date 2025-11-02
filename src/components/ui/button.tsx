@@ -52,7 +52,7 @@ function Button({
     <Comp
       data-slot="button"
       className={cn(
-        "disabled:cursor-not-allowed",
+        "cursor-pointer disabled:cursor-not-allowed",
         buttonVariants({ variant, size, className }),
       )}
       {...props}

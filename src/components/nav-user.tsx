@@ -62,7 +62,7 @@ export function NavUser({ username, image }: NavUserProps) {
     setTheme(theme === "dark" ? "light" : "dark");
   };
   async function handleLogout() {
-    await toast.promise(
+    toast.promise(
       Logout().then((result) => {
         if (result.success) {
           router.push("/login");
