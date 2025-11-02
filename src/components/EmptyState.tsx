@@ -5,11 +5,11 @@ import { DoctorBookingsForm } from "./DoctorBookingsForm";
 import { GridPatterns } from "./GridPatterns";
 import { useTheme } from "next-themes";
 
-export function EmptyState({ colSpan = 10 }) {
+export function EmptyState() {
   const { theme } = useTheme();
   return (
     <TableRow>
-      <TableCell colSpan={colSpan} className="text-center">
+      <TableCell colSpan={10} className="text-center">
         <div className="relative flex h-full flex-col items-center justify-center py-4">
           {theme === "dark" && (
             <div className="absolute inset-0 flex items-center justify-center overflow-hidden opacity-30">

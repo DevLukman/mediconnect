@@ -17,7 +17,7 @@ import Form from "next/form";
 import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-import { Input } from "./ui/input";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "./ui/input-group";
 import {
   Select,
   SelectContent,
@@ -26,8 +26,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { InputGroup, InputGroupAddon, InputGroupInput } from "./ui/input-group";
-
 export default function PatientAppointmentContext() {
   return (
     <div>
@@ -62,7 +60,10 @@ export default function PatientAppointmentContext() {
         <span className="text-muted-foreground text-sm">Appointments</span>
       </div>
       <div className="mt-6 flex w-full flex-col gap-4 md:flex-row md:gap-8">
-        <Form action={"/"} className="flex w-full flex-1 items-center gap-2">
+        <Form
+          action={"/patient/appointments"}
+          className="flex w-full flex-1 items-center gap-2"
+        >
           <InputGroup className="py-5">
             <InputGroupInput placeholder="Search appointments by doctor's name or specialization" />
 
@@ -76,9 +77,9 @@ export default function PatientAppointmentContext() {
           </Button>
         </Form>
 
-        <Select defaultValue="all">
+        <Select defaultValue="All">
           <SelectTrigger className="w-full py-5 md:w-[200px]">
-            <SelectValue placeholder="all" />
+            <SelectValue placeholder="All" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
@@ -109,53 +110,7 @@ export default function PatientAppointmentContext() {
               <TableCell>October 17, 2025 at 1:00 PM</TableCell>
               <TableCell>October 17, 2025 at 2:00 PM</TableCell>
               <TableCell>Dr. danilm danilm</TableCell>
-              <TableCell className="capitaize">dermatology</TableCell>
-              <TableCell>
-                <Badge variant={"success"}>Confirmed</Badge>
-              </TableCell>
-              <TableCell>
-                <Badge variant={"outline"}>Past</Badge>
-              </TableCell>
-              <TableCell>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  aria-label="Open appointment actions menu"
-                  className="size-6 cursor-pointer"
-                >
-                  <EllipsisVertical size={14} />
-                </Button>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>iaOStm-RQQgTqJ_hPxmHH</TableCell>
-              <TableCell>October 17, 2025 at 1:00 PM</TableCell>
-              <TableCell>October 17, 2025 at 2:00 PM</TableCell>
-              <TableCell>Dr. danilm danilm</TableCell>
-              <TableCell className="capitaize">dermatology</TableCell>
-              <TableCell>
-                <Badge variant={"success"}>Confirmed</Badge>
-              </TableCell>
-              <TableCell>
-                <Badge variant={"outline"}>Past</Badge>
-              </TableCell>
-              <TableCell>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  aria-label="Open appointment actions menu"
-                  className="size-6 cursor-pointer"
-                >
-                  <EllipsisVertical size={14} />
-                </Button>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell>iaOStm-RQQgTqJ_hPxmHH</TableCell>
-              <TableCell>October 17, 2025 at 1:00 PM</TableCell>
-              <TableCell>October 17, 2025 at 2:00 PM</TableCell>
-              <TableCell>Dr. danilm danilm</TableCell>
-              <TableCell className="capitaize">dermatology</TableCell>
+              <TableCell className="capitalize">dermatology</TableCell>
               <TableCell>
                 <Badge variant={"success"}>Confirmed</Badge>
               </TableCell>
