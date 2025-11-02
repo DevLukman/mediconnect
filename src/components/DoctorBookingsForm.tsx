@@ -108,7 +108,7 @@ export function DoctorBookingsForm() {
                       type="text"
                     />
                     <FieldDescription>
-                      A unique identifier for the patient (up to 10 characters)
+                      A unique identifier for the patient (up to 6 characters)
                     </FieldDescription>
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
