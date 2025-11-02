@@ -38,7 +38,7 @@ export default function DatePicker({
 
   function formatShortDate(date: Date | undefined): string {
     if (!date || !isValid(date)) return "";
-    return format(date, "m/d/yy");
+    return format(date, "M/d/yy");
   }
 
   const currentDateFormatted = format(new Date(), "M/d/yy");
