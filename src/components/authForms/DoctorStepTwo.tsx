@@ -168,7 +168,7 @@ export default function DoctorStepTwo({
                 control={control}
                 render={({ field, fieldState }) => (
                   <Field>
-                    <FieldLabel htmlFor={field.name}>Start Time</FieldLabel>
+                    <FieldLabel htmlFor={field.name}>End Time</FieldLabel>
                     <Input
                       {...field}
                       aria-invalid={fieldState.invalid}
