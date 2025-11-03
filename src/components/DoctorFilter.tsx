@@ -42,9 +42,9 @@ export default function DoctorFilter() {
             <FieldGroup className="gap-6">
               <Field>
                 <FieldLabel htmlFor="speciality">Speciality</FieldLabel>
-                <Select defaultValue="All">
+                <Select name="specialty" defaultValue="All">
                   <SelectTrigger className="w-full" id="speciality">
-                    <SelectValue placeholder="Select a fruit" />
+                    <SelectValue placeholder="Select a specialty" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
@@ -60,7 +60,8 @@ export default function DoctorFilter() {
               </Field>
               <Field>
                 <NumberField
-                  id="Minimum Years of Experience"
+                  name="minExperience"
+                  id="min-experience"
                   label="Minimum Years of Experience"
                   placeholder="Minimum Years of Experience"
                   minValue={1}
@@ -68,7 +69,8 @@ export default function DoctorFilter() {
               </Field>
               <Field>
                 <NumberField
-                  id="Maximum Years of Experience"
+                  name="maxExperience"
+                  id="max-experience"
                   label="Maximum Years of Experience"
                   placeholder="Maximum Years of Experience"
                   minValue={1}
@@ -79,6 +81,7 @@ export default function DoctorFilter() {
                   <Field>
                     <FieldLabel htmlFor="startTime">Start Time</FieldLabel>
                     <Input
+                      name="startTime"
                       type="time"
                       id="startTime"
                       step="1"
@@ -90,6 +93,7 @@ export default function DoctorFilter() {
                   <Field>
                     <FieldLabel htmlFor="endTime">End Time</FieldLabel>
                     <Input
+                      name="endTime"
                       type="time"
                       id="endTime"
                       step="1"
@@ -99,20 +103,22 @@ export default function DoctorFilter() {
                 </div>
               </Field>
             </FieldGroup>
+            <SheetFooter
+              className={cn(
+                "border-border flex w-full flex-row gap-4 border-t",
+              )}
+            >
+              <SheetClose asChild>
+                <Button variant="outline" type="button" className="flex-1">
+                  Close
+                </Button>
+              </SheetClose>
+              <Button type="submit" className="flex-1">
+                Apply Filter
+              </Button>
+            </SheetFooter>
           </Form>
         </div>
-        <SheetFooter
-          className={cn("border-border flex w-full flex-row gap-4 border-t")}
-        >
-          <SheetClose asChild>
-            <Button variant="outline" className="flex-1">
-              Close
-            </Button>
-          </SheetClose>
-          <Button type="submit" className="flex-1">
-            Apply Filter
-          </Button>
-        </SheetFooter>
       </SheetContent>
     </Sheet>
   );
