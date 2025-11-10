@@ -239,7 +239,6 @@ export default async function Page() {
               patients page.
             </Link>
           </p>
-          <div></div>
         </div>
         <div className="border-border mt-6 overflow-hidden rounded-lg border">
           <Table>
