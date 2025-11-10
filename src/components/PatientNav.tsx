@@ -21,7 +21,7 @@ export function PatientNav() {
   const pathname = usePathname();
 
   return (
-    <SidebarGroup>
+    <SidebarGroup className="pt-4">
       <SidebarMenu>
         {PATIENTLINKS.map((item) => (
           <Link

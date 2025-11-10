@@ -14,7 +14,7 @@ export function DoctorNav() {
   const pathname = usePathname();
 
   return (
-    <SidebarGroup>
+    <SidebarGroup className="pt-4">
       <SidebarMenu>
         {DOCTORLINKS.map((item) => {
           return (
