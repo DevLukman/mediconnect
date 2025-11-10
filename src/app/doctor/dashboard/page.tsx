@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 import {
   Table,
   TableBody,
@@ -45,7 +46,7 @@ export default async function Page() {
               </span>
 
               <span className="text-muted-foreground text-sm font-semibold">
-                Total Consultations
+                Consultation Revenue
               </span>
             </div>
             <div>
@@ -62,13 +63,9 @@ export default async function Page() {
                 taxes, and deductions. May differ from final pay.
               </p>
             </div>
+
             <div className="mt-4">
-              <div
-                className="h-2 rounded-full bg-green-600"
-                style={{
-                  width: `100%`,
-                }}
-              />
+              <Progress value={100} className="bg-success" />
             </div>
           </CardContent>
         </Card>
