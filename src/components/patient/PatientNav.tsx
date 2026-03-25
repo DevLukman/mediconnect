@@ -4,6 +4,7 @@ import {
   SidebarGroup,
   SidebarMenu,
   SidebarMenuButton,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { PATIENTLINKS } from "@/utils/constant";
@@ -19,12 +20,14 @@ export const PATIENT_ROUTES = {
 export type PatientRoute = (typeof PATIENT_ROUTES)[keyof typeof PATIENT_ROUTES];
 export function PatientNav() {
   const pathname = usePathname();
+  const { setOpenMobile } = useSidebar();
 
   return (
     <SidebarGroup className="pt-4">
       <SidebarMenu>
         {PATIENTLINKS.map((item) => (
           <Link
+            onClick={() => setOpenMobile(false)}
             key={item.name}
             href={item.url as PatientRoute}
             className={cn(

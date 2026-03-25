@@ -1,6 +1,6 @@
 import DashboardHeader from "@/components/DashboardHeader";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { PatientDashboardSidebar } from "@/components/PatientDashboardSidebar";
+import { PatientDashboardSidebar } from "@/components/patient/PatientDashboardSidebar";
 import { getUserSession } from "@/lib/action/getSession";
 import type { Metadata } from "next";
 export const metadata: Metadata = {
@@ -21,7 +21,7 @@ export default async function RootLayout({
       <PatientDashboardSidebar username={username} image={image} />
       <SidebarInset>
         <DashboardHeader />
-        <main className="px-8 py-2">{children}</main>
+        <main>{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );

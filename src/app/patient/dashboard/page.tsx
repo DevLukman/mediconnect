@@ -17,12 +17,12 @@ export const metadata: Metadata = {
 export default async function Page() {
   const session = await getUserSession();
   return (
-    <section>
+    <section className="mt-8 px-8 pb-2">
       <div>
-        <h1 className="text-2xl font-semibold">
+        <h1 className="text-lg font-semibold md:text-xl">
           Welcome back, {session?.user.name}
         </h1>
-        <p className="text-muted-foreground mt-2 text-sm font-normal">
+        <p className="text-muted-foreground mt-1 text-sm font-normal">
           Here is the latest update. Check now
         </p>
       </div>

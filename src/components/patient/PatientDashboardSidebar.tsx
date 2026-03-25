@@ -12,7 +12,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { PatientNav } from "./PatientNav";
-import { Separator } from "./ui/separator";
+import { Separator } from "../ui/separator";
 
 type DashboardSidebarProps = React.ComponentProps<typeof Sidebar> & {
   username: string | null;

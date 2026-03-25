@@ -1,4 +1,4 @@
-import PatientAppointmentContent from "@/components/PatientAppointmentContent";
+import PatientAppointmentContent from "@/components/patient/PatientAppointmentContent";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,5 +7,9 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <PatientAppointmentContent />;
+  return (
+    <section className="mt-8 px-8 pb-2">
+      <PatientAppointmentContent />
+    </section>
+  );
 }

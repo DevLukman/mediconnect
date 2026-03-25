@@ -1,4 +1,4 @@
-import DoctorAppointmentContent from "@/components/DoctorAppointmentsContent";
+import DoctorAppointmentContent from "@/components/doctor/DoctorAppointmentsContent";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <section>
+    <section className="mt-8">
       <DoctorAppointmentContent />
     </section>
   );

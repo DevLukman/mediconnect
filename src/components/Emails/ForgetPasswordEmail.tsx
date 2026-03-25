@@ -171,17 +171,6 @@ const ForgotPasswordEmail = (props: ForgotPasswordEmailProps) => {
               <Text className="m-0 mb-[8px] text-[11px] leading-[16px] text-gray-500 sm:text-[12px]">
                 {companyName}, {companyAddress}
               </Text>
-              <Text className="m-0 text-[11px] leading-[16px] text-gray-500 sm:text-[12px]">
-                © {new Date().getFullYear()} {companyName}. All rights
-                reserved.{" "}
-                <Link href="#" className="text-gray-500 underline">
-                  Privacy Policy
-                </Link>{" "}
-                |{" "}
-                <Link href="#" className="text-gray-500 underline">
-                  Unsubscribe
-                </Link>
-              </Text>
             </Section>
           </Container>
         </Body>

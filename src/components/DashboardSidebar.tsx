@@ -3,7 +3,7 @@
 import * as React from "react";
 
 import { DashboardLogo } from "@/components/DashboardLogo";
-import { DoctorNav } from "@/components/DoctorNav";
+import { DoctorNav } from "@/components/doctor/DoctorNav";
 import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,

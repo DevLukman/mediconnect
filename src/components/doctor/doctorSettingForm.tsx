@@ -9,10 +9,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { IconPaperclip } from "@intentui/icons";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { CountrySelect } from "./CountrySelect";
-import { NumberField } from "./NumberInput";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Button } from "./ui/button";
+import { CountrySelect } from "../CountrySelect";
+import { NumberField } from "../NumberInput";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
 import {
   Field,
   FieldContent,
@@ -20,8 +20,8 @@ import {
   FieldError,
   FieldGroup,
   FieldLabel,
-} from "./ui/field";
-import { Input } from "./ui/input";
+} from "../ui/field";
+import { Input } from "../ui/input";
 import {
   Select,
   SelectContent,
@@ -29,10 +29,10 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
-import { Separator } from "./ui/separator";
-import { Spinner } from "./ui/spinner";
-import { Textarea } from "./ui/textarea";
+} from "../ui/select";
+import { Separator } from "../ui/separator";
+import { Spinner } from "../ui/spinner";
+import { Textarea } from "../ui/textarea";
 import { useRouter } from "next/navigation";
 type DoctorSettingFormProps = {
   doctorData: DoctorProfileFormData | null;
@@ -61,12 +61,16 @@ export default function DoctorSettingForm({
   });
 
   async function handleProfileUpdate(data: DoctorProfileFormData) {
-    const result = await UpdateDoctorProfile(data);
-    if (result.success) {
-      toast.success(result.message);
-      router.refresh();
-    } else {
-      toast.error(result.message);
+    try {
+      const result = await UpdateDoctorProfile(data);
+      if (result.success) {
+        toast.success(result.message);
+        router.refresh();
+      } else {
+        toast.error(result.message);
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -242,7 +246,7 @@ export default function DoctorSettingForm({
               />
               <FieldDescription>
                 This was automatically set based on your location. You can
-                change it if the need arise.
+                change it if the need arises.
               </FieldDescription>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -259,7 +263,7 @@ export default function DoctorSettingForm({
             <Avatar className="mt-4 size-14">
               <AvatarImage
                 src={imageValue}
-                alt="@shadcn"
+                alt="Doctor profile photo"
                 className="object-cover"
               />
               <AvatarFallback className="text-2xl uppercase">
@@ -342,9 +346,9 @@ export default function DoctorSettingForm({
         <Button
           type="submit"
           className="flex-1 cursor-pointer"
-          disabled={isSubmitting}
+          disabled={isSubmitting || isUploading}
         >
-          {isSubmitting ? <Spinner /> : "Update"}
+          {isSubmitting || isUploading ? <Spinner /> : "Update"}
         </Button>
       </div>
     </form>

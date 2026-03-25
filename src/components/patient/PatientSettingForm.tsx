@@ -1,6 +1,7 @@
 "use client";
 
 import { useFileSelect } from "@/hooks/useFileSelect";
+import { UpdatePatientProfile } from "@/lib/action/getPatientProfile";
 import { PatientProfileFormData, PatientProfileSchema } from "@/lib/types";
 import { bloodTypes, genders, genotypes } from "@/utils/constant";
 import { countries } from "@/utils/countries";
@@ -10,19 +11,20 @@ import { ChevronDownIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { CountrySelect } from "./CountrySelect";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Button } from "./ui/button";
-import { Calendar } from "./ui/calendar";
+import { toast } from "sonner";
+import { CountrySelect } from "../CountrySelect";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
+import { Calendar } from "../ui/calendar";
 import {
   Field,
   FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
-} from "./ui/field";
-import { Input } from "./ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+} from "../ui/field";
+import { Input } from "../ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import {
   Select,
   SelectContent,
@@ -30,11 +32,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
-import { Separator } from "./ui/separator";
-import { Spinner } from "./ui/spinner";
-import { UpdatePatientProfile } from "@/lib/action/getPatientProfile";
-import { toast } from "sonner";
+} from "../ui/select";
+import { Separator } from "../ui/separator";
+import { Spinner } from "../ui/spinner";
 
 type PatientSettingFormProps = {
   patientData: PatientProfileFormData | null;
@@ -66,16 +66,19 @@ export default function PatientSettingForm({
   });
 
   async function handleProfileUpdate(data: PatientProfileFormData) {
-    console.log(data);
-    const result = await UpdatePatientProfile(data);
-    if (result.success) {
-      toast.success(result.message);
-      router.refresh();
-    } else {
-      toast.error(result.message);
+    try {
+      const result = await UpdatePatientProfile(data);
+      if (result.success) {
+        toast.success(result.message);
+        router.refresh();
+      } else {
+        toast.error(result.message);
+      }
+    } catch (error) {
+      toast.error("An unexpected error occurred. Please try again.");
+      console.error(error);
     }
   }
-
   return (
     <form className="mt-6 pb-6" onSubmit={handleSubmit(handleProfileUpdate)}>
       <FieldGroup className="gap-5">
@@ -181,7 +184,7 @@ export default function PatientSettingForm({
           control={control}
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel htmlFor={field.name}>BloodType</FieldLabel>
+              <FieldLabel htmlFor={field.name}>Blood type</FieldLabel>
               <Select
                 {...field}
                 onValueChange={field.onChange}
@@ -342,7 +345,7 @@ export default function PatientSettingForm({
               />
               <FieldDescription>
                 This was automatically set based on your location. You can
-                change it if the need arise.
+                change it if the need arises.
               </FieldDescription>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
@@ -358,7 +361,7 @@ export default function PatientSettingForm({
             <Avatar className="mt-4 size-14">
               <AvatarImage
                 src={imageValue}
-                alt="@shadcn"
+                alt="Patient profile photo"
                 className="object-cover"
               />
               <AvatarFallback className="text-2xl uppercase">
