@@ -21,7 +21,7 @@ import {
   FieldError,
   FieldGroup,
   FieldLabel,
-} from "./ui/field";
+} from "../ui/field";
 import {
   Select,
   SelectContent,
@@ -29,12 +29,12 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
+} from "../ui/select";
 import { DURATIONS } from "@/utils/constant";
 import { useMemo, useState } from "react";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Calendar } from "./ui/calendar";
-import { Spinner } from "./ui/spinner";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Calendar } from "../ui/calendar";
+import { Spinner } from "../ui/spinner";
 
 export function DoctorBookingsForm() {
   const [open, setOpen] = useState(false);
@@ -87,8 +87,8 @@ export function DoctorBookingsForm() {
               Schedule New Appointment
             </DialogTitle>
             <DialogDescription>
-              Book your next appointment quickly and easily. Choose a date and
-              time that works best for you.
+              Book appointment on behalf of your patient quickly and easily.
+              Choose a date and time that works best for you.
             </DialogDescription>
           </DialogHeader>
           <form onSubmit={handleSubmit(handleDoctorBooking)}>
@@ -160,9 +160,17 @@ export function DoctorBookingsForm() {
                               }}
                               onSelect={(date) => {
                                 if (date) {
+                                  const year = date.getFullYear();
+                                  const month = String(
+                                    date.getMonth() + 1,
+                                  ).padStart(2, "0");
+                                  const day = String(date.getDate()).padStart(
+                                    2,
+                                    "0",
+                                  );
                                   setValue(
                                     "appointmentDate",
-                                    date.toISOString(),
+                                    `${year}-${month}-${day}`,
                                     {
                                       shouldValidate: true,
                                     },

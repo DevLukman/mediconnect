@@ -12,8 +12,8 @@ import {
 import { specialists } from "@/utils/constant";
 import { Filter } from "lucide-react";
 import Form from "next/form";
-import { NumberField } from "./NumberInput";
-import { Field, FieldGroup, FieldLabel } from "./ui/field";
+import { NumberField } from "../NumberInput";
+import { Field, FieldGroup, FieldLabel } from "../ui/field";
 import {
   Select,
   SelectContent,
@@ -21,8 +21,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
-import { Input } from "./ui/input";
+} from "../ui/select";
+import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
 
 export default function DoctorFilter() {
@@ -41,9 +41,9 @@ export default function DoctorFilter() {
           <Form action={"/patient/doctors"}>
             <FieldGroup className="gap-6">
               <Field>
-                <FieldLabel htmlFor="speciality">Speciality</FieldLabel>
+                <FieldLabel htmlFor="specialty">Specialty</FieldLabel>
                 <Select name="specialty" defaultValue="All">
-                  <SelectTrigger className="w-full" id="speciality">
+                  <SelectTrigger className="w-full" id="specialty">
                     <SelectValue placeholder="Select a specialty" />
                   </SelectTrigger>
                   <SelectContent>
@@ -105,7 +105,7 @@ export default function DoctorFilter() {
             </FieldGroup>
             <SheetFooter
               className={cn(
-                "border-border flex w-full flex-row gap-4 border-t",
+                "border-border mt-4 flex w-full flex-row gap-4 border-t",
               )}
             >
               <SheetClose asChild>

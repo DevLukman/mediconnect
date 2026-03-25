@@ -11,17 +11,17 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <section className="mt-4 px-4 sm:px-6 overflow-x-hidden lg:px-8 h-[70dvh] flex items-center justify-center flex-col">
+    <section className="mt-4 flex h-[70dvh] flex-col items-center justify-center overflow-x-hidden px-4 sm:px-6 lg:px-8">
       <div className="mx-auto w-full max-w-[400px]">
         <Logo />
         <div className="mt-4">
-          <h2 className="font-IBM font-bold text-xl">
+          <h2 className="font-IBM text-xl font-bold">
             Enter your email to reset your password
           </h2>
         </div>
         <ForgetPasswordForm />
-        <div className="flex flex-col items-center justify-center mt-4 gap-2">
-          <p className="flex items-center gap-2 text-sm ">
+        <div className="mt-4 flex flex-col items-center justify-center gap-2">
+          <p className="flex items-center gap-2 text-sm">
             <span> Remember your password?</span>
             <Link href={"/login"} className="text-primary underline">
               Login

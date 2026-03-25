@@ -14,9 +14,13 @@ import {
 } from "lucide-react";
 import Form from "next/form";
 import Link from "next/link";
-import { Badge } from "./ui/badge";
-import { Button } from "./ui/button";
-import { InputGroup, InputGroupAddon, InputGroupInput } from "./ui/input-group";
+import { Badge } from "../ui/badge";
+import { Button } from "../ui/button";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "../ui/input-group";
 import {
   Select,
   SelectContent,
@@ -24,7 +28,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
+} from "../ui/select";
 export default function PatientAppointmentContent() {
   return (
     <div>
@@ -64,13 +68,15 @@ export default function PatientAppointmentContent() {
           className="flex w-full flex-1 items-center gap-2"
         >
           <InputGroup className="py-5">
-            <InputGroupInput placeholder="Search appointments by doctor's name or specialization" />
+            <InputGroupInput
+              name="search"
+              placeholder="Search appointments by doctor's name or specialization"
+            />
 
             <InputGroupAddon>
               <SearchIcon />
             </InputGroupAddon>
           </InputGroup>
-
           <Button>
             <SearchIcon />
           </Button>

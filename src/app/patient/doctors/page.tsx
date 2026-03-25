@@ -1,4 +1,4 @@
-import DoctorFilter from "@/components/DoctorFilter";
+import DoctorFilter from "@/components/doctor/DoctorFilter";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 };
 export default function Page() {
   return (
-    <section>
+    <section className="mt-8 px-8 pb-2">
       <div>
         <h1 className="text-xl font-semibold">Find Your ideal Doctor</h1>
         <p className="text-muted-foreground mt-2 text-sm font-normal">
@@ -56,7 +56,7 @@ export default function Page() {
           <Card className="flex flex-col">
             <CardHeader>
               <CardTitle className="flex items-center gap-4">
-                <Avatar className="size-10">
+                <Avatar className="size-9">
                   <AvatarImage src="https://flagcdn.com/at.svg" alt="doctor" />
                 </Avatar>
                 <div className="flex flex-col">

@@ -1,4 +1,4 @@
-import PatientSettingForm from "@/components/PatientSettingForm";
+import PatientSettingForm from "@/components/patient/PatientSettingForm";
 import { Separator } from "@/components/ui/separator";
 import { getPatientProfile } from "@/lib/action/getPatientProfile";
 import type { Metadata } from "next";
@@ -17,17 +17,17 @@ export default async function Page() {
     console.error("Failed to load doctor profile:", error);
   }
   return (
-    <section>
+    <section className="mt-8 px-8 pb-2">
       <div className="w-full">
-        <h1 className="font-bold text-2xl">Settings</h1>
-        <p className="text-sm font-normal text-muted-foreground mt-2">
+        <h1 className="text-2xl font-bold">Settings</h1>
+        <p className="text-muted-foreground mt-2 text-sm font-normal">
           Manage your account settings.
         </p>
         <Separator className="mt-4" />
       </div>
-      <div className="w-full mt-8">
-        <h1 className="font-bold text-xl">Personal info</h1>
-        <p className="text-sm font-normal text-muted-foreground mt-2">
+      <div className="mt-8 w-full">
+        <h1 className="text-xl font-bold">Personal info</h1>
+        <p className="text-muted-foreground mt-2 text-sm font-normal">
           Update your photo and personal details here.
         </p>
         <Separator className="mt-4" />

@@ -1,4 +1,4 @@
-import ForgotPasswordEmail from "@/components/ForgetPasswordEmail";
+import ForgotPasswordEmail from "@/components/Emails/ForgetPasswordEmail";
 import { PrismaClient } from "@/generated/prisma";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";

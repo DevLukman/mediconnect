@@ -101,7 +101,14 @@ export const PatientProfileSchema = z.object({
 
 //Doctor bookings
 export const DoctorBookings = z.object({
-  patientId: z.string("Patient ID is required").max(6),
+  patientId: z.string("Patient ID is required").max(20),
+  appointmentDate: z.string("Appointment date is required"),
+  appointmentTime: z.string("Appointment time is required"),
+  appointmentDuration: z.string("Duration is required"),
+  reasonForVisit: z.string("Reason for visit is required").max(200),
+});
+export const PatientBookings = z.object({
+  doctorId: z.string("Patient ID is required").max(20),
   appointmentDate: z.string("Appointment date is required"),
   appointmentTime: z.string("Appointment time is required"),
   appointmentDuration: z.string("Duration is required"),
@@ -111,6 +118,7 @@ export const DoctorBookings = z.object({
 // TypeScript types derived from Zod schemas
 export type TLoginSchema = z.infer<typeof LoginSchema>;
 export type DoctorBookingsTypes = z.infer<typeof DoctorBookings>;
+export type PatientBookingsTypes = z.infer<typeof PatientBookings>;
 export type TForgetPasswordSchema = z.infer<typeof ForgetPasswordSchema>;
 export type StepOneFormData = z.infer<typeof stepOneSchema>;
 export type PatientStepTwoFormData = z.infer<typeof patientStepTwoSchema>;

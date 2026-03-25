@@ -1,7 +1,7 @@
 "use client";
 import { CalendarPlus2 } from "lucide-react";
 import { TableCell, TableRow } from "./ui/table";
-import { DoctorBookingsForm } from "./DoctorBookingsForm";
+import { DoctorBookingsForm } from "./doctor/DoctorBookingsForm";
 import { GridPatterns } from "./GridPatterns";
 import { useTheme } from "next-themes";
 

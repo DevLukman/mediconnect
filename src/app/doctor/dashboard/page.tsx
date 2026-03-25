@@ -28,7 +28,7 @@ export default async function Page() {
   const session = await getUserSession();
 
   return (
-    <section>
+    <section className="mt-8">
       <div>
         <h1 className="text-2xl font-semibold">
           Welcome back, Dr. {session?.user.name}
