@@ -1,11 +1,19 @@
 import { PrismaClient } from "@/generated/prisma";
-import { withAccelerate } from "@prisma/extension-accelerate";
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient;
+import { PrismaPg } from "@prisma/adapter-pg";
+
+const makeClient = () => {
+  const adapter = new PrismaPg({
+    connectionString: process.env.DATABASE_URL!,
+  });
+  return new PrismaClient({ adapter });
 };
-const db =
-  globalForPrisma.prisma || new PrismaClient().$extends(withAccelerate());
+
+type PrismaClientExtended = ReturnType<typeof makeClient>;
+
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClientExtended | undefined;
+};
+
+export const db = globalForPrisma.prisma ?? makeClient();
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = db;
-
-export { db };

@@ -15,7 +15,7 @@ import { IconPencilBox, IconStar, IconStarFill } from "@intentui/icons";
 import { Textarea } from "../ui/textarea";
 import { Label } from "../ui/label";
 
-export function ReviewModal() {
+export function ReviewModal({ name }: { name: string }) {
   const [rating, setRating] = useState(0);
   const [hovered, setHovered] = useState(0);
   const [review, setReview] = useState("");
@@ -51,7 +51,8 @@ export function ReviewModal() {
               Write a Review
             </DialogTitle>
             <DialogDescription>
-              Share your experience with Dr. Lukas
+              Share your experience with Dr.
+              <span className="capitalize">{name}</span>
             </DialogDescription>
           </DialogHeader>
 

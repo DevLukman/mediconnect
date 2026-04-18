@@ -14,10 +14,10 @@ export default async function Page() {
   try {
     patientData = await getPatientProfile();
   } catch (error) {
-    console.error("Failed to load doctor profile:", error);
+    console.error("Failed to load patient profile:", error);
   }
   return (
-    <section className="mt-8 px-8 pb-2">
+    <section className="mt-18 px-5 pb-10 md:mt-8 md:px-8 md:pb-3">
       <div className="w-full">
         <h1 className="text-2xl font-bold">Settings</h1>
         <p className="text-muted-foreground mt-2 text-sm font-normal">

@@ -22,8 +22,8 @@ export default async function RootLayout({
     <SidebarProvider>
       <DashboardSidebar username={username} image={image} />
       <SidebarInset>
-        <DashboardHeader />
-        <main className="md:px-9 px-6">{children}</main>
+        <DashboardHeader image={image} username={username} />
+        <main>{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );

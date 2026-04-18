@@ -75,16 +75,22 @@ export const DOCTOR_ROUTES = {
 export type DoctorRoute = (typeof DOCTOR_ROUTES)[keyof typeof DOCTOR_ROUTES];
 
 export const specialists = [
-  "Therapists",
-  "Cardiologist",
-  "Dermatologist",
-  "Pediatrician",
-  "Psychiatrist",
-  "Orthopedic",
-  "Neurologist",
-  "Gynecologist",
-  "Ophthalmologist",
-  "ENT Specialist",
+  "cardiology",
+  "dermatology",
+  "endocrinology",
+  "gastroenterology",
+  "therapy",
+  "neurology",
+  "oncology",
+  "pediatrics",
+  "psychiatry",
+  "radiology",
+  "surgery",
+  "urology",
+  "orthopedics",
+  "ophthalmology",
+  "gynecology",
+  "anesthesiology",
 ];
 
 export const bloodTypes = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];

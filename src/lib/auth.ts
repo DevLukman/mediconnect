@@ -1,15 +1,14 @@
 import ForgotPasswordEmail from "@/components/Emails/ForgetPasswordEmail";
-import { PrismaClient } from "@/generated/prisma";
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 import { Resend } from "resend";
-const prisma = new PrismaClient();
+import { db } from "./prisma";
 const resend = new Resend(process.env.RESEND_API_KEY as string);
 export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL!,
   secret: process.env.BETTER_AUTH_SECRET!,
-  database: prismaAdapter(prisma, { provider: "postgresql" }),
+  database: prismaAdapter(db, { provider: "postgresql" }),
 
   emailAndPassword: {
     enabled: true,

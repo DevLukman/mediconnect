@@ -14,7 +14,8 @@ import { Input } from "@/components/ui/input";
 import { PatientBookings, PatientBookingsTypes } from "@/lib/types";
 import { DURATIONS } from "@/utils/constant";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronDownIcon, PlusCircle } from "lucide-react";
+import { IconCalendarPlus } from "@intentui/icons";
+import { ChevronDownIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Calendar } from "../ui/calendar";
@@ -35,9 +36,15 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Spinner } from "../ui/spinner";
-import { IconCalendarPlus } from "@intentui/icons";
-
-export function PatientBookingsForm({ doctorId }: { doctorId: string }) {
+import { TimeField, DateInput, DateSegment } from "react-aria-components";
+import { Textarea } from "../ui/textarea";
+export function PatientBookingsForm({
+  doctorId,
+  name,
+}: {
+  doctorId: string;
+  name: string;
+}) {
   const [open, setOpen] = useState(false);
   const today = useMemo(() => {
     const date = new Date();
@@ -109,7 +116,8 @@ export function PatientBookingsForm({ doctorId }: { doctorId: string }) {
                       type="text"
                     />
                     <FieldDescription>
-                      A unique identifier for the patient (up to 6 characters)
+                      A unique identifier for Dr.{" "}
+                      <span className="capitalize">{name}</span>
                     </FieldDescription>
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -185,21 +193,33 @@ export function PatientBookingsForm({ doctorId }: { doctorId: string }) {
                   <Controller
                     name="appointmentTime"
                     control={control}
-                    render={({ field, fieldState }) => (
+                    render={({ field: { onChange, name }, fieldState }) => (
                       <Field>
-                        <FieldLabel htmlFor={field.name}>
+                        <FieldLabel id="time-label" htmlFor={name}>
                           Appointment Time
                         </FieldLabel>
-                        <Input
-                          {...field}
-                          value={field.value || ""}
-                          aria-invalid={fieldState.invalid}
-                          type="time"
-                          id={field.name}
-                          disabled={isSubmitting}
-                          step="1"
-                          className="bg-background mt-1 appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
-                        />
+
+                        <TimeField
+                          aria-label="Appointment Time"
+                          id={name}
+                          isDisabled={isSubmitting}
+                          onChange={(val) => {
+                            const formattedTime = val
+                              ? `${val.hour.toString().padStart(2, "0")}:${val.minute.toString().padStart(2, "0")}`
+                              : "";
+                            onChange(formattedTime);
+                          }}
+                        >
+                          <DateInput className="border-border bg-background flex gap-1 rounded border p-1.5 sm:p-2">
+                            {(segment) => (
+                              <DateSegment
+                                segment={segment}
+                                className="focus:bg-primary rounded text-sm tabular-nums focus:text-white focus:outline-none sm:text-base md:px-px"
+                              />
+                            )}
+                          </DateInput>
+                        </TimeField>
+
                         {fieldState.invalid && (
                           <FieldError errors={[fieldState.error]} />
                         )}
@@ -252,12 +272,11 @@ export function PatientBookingsForm({ doctorId }: { doctorId: string }) {
                     <FieldLabel htmlFor={field.name}>
                       Reason for visit
                     </FieldLabel>
-                    <Input
+                    <Textarea
                       {...field}
                       value={field.value || ""}
                       id={field.name}
                       aria-invalid={fieldState.invalid}
-                      type="text"
                       disabled={isSubmitting}
                     />
                     {fieldState.invalid && (

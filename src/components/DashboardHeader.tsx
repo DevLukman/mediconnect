@@ -1,10 +1,242 @@
+"use client";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Notification } from "./Notification";
 
-export default function DashboardHeader() {
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
+import { DeleteUser, Logout } from "@/lib/action/authAction";
+import {
+  Headset,
+  HouseHeart,
+  LogOut,
+  Moon,
+  Trash,
+  UserRoundPen,
+} from "lucide-react";
+import { useTheme } from "next-themes";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
+import { Button } from "./ui/button";
+import { Spinner } from "./ui/spinner";
+type AppRoute = "/doctor/dashboard" | "/patient/dashboard" | "/admin/dashboard";
+type DashboardHeaderProps = {
+  username: string | null;
+  image: string | null;
+};
+export default function DashboardHeader({
+  username,
+  image,
+}: DashboardHeaderProps) {
+  const router = useRouter();
+  const pathname = usePathname().split("/")[1] as
+    | "doctor"
+    | "patient"
+    | "admin";
+
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const handleToggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
+  async function handleLogout() {
+    toast.promise(
+      Logout().then((result) => {
+        if (result.success) {
+          router.push("/login");
+          return result;
+        }
+        throw new Error(result.message);
+      }),
+      {
+        loading: "Logging out...",
+        success: (result) => result.message || "Successfully logged out!",
+        error: (err) => err.message || "Failed to logout",
+      },
+    );
+  }
+
+  async function handleDeleteAccount() {
+    try {
+      setLoading(true);
+      const result = await DeleteUser();
+      if (result.success) {
+        toast.success(result.message);
+        router.push("/signup");
+      } else {
+        toast.error(result.message);
+      }
+    } catch (err) {
+      const e = err as Error;
+      console.error(e.message);
+      toast.error("Something went wrong while deleting your account.");
+    } finally {
+      setLoading(false);
+      setOpen(false);
+    }
+  }
+
   return (
-    <header className="hidden h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 md:hidden">
-      <div className="flex items-center gap-2 px-4 md:hidden">
-        <SidebarTrigger className="-ml-1" />
+    <header className="bg-card fixed w-full shrink-0 items-center gap-2 shadow-sm transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 md:hidden">
+      <div className="flex w-full items-center justify-between px-4">
+        <div>
+          <SidebarTrigger />
+        </div>
+        <div>
+          <AlertDialog open={open} onOpenChange={setOpen}>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete
+                  your account and remove your data from our servers.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel
+                  disabled={loading}
+                  aria-disabled={loading}
+                  className="min-w-24 cursor-pointer"
+                >
+                  Cancel
+                </AlertDialogCancel>
+                <Button
+                  onClick={handleDeleteAccount}
+                  disabled={loading}
+                  aria-disabled={loading}
+                  aria-busy={loading}
+                  className="flex min-w-24 cursor-pointer items-center justify-center"
+                  variant="destructive"
+                >
+                  {loading ? (
+                    <Spinner aria-label="Deleting account" />
+                  ) : (
+                    "Continue"
+                  )}
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+          <div>
+            <div className="flex items-center">
+              <Notification />
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild className="cursor-pointer">
+                      <SidebarMenuButton
+                        size="lg"
+                        className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                      >
+                        <Avatar className="size-8 rounded-full">
+                          <AvatarImage
+                            src={image ?? undefined}
+                            alt={username ?? "user"}
+                            loading="lazy"
+                          />
+                          <AvatarFallback className="rounded-lg">
+                            {(username?.slice(0, 2) ?? "CN").toUpperCase()}
+                          </AvatarFallback>
+                        </Avatar>
+                      </SidebarMenuButton>
+                    </DropdownMenuTrigger>
+
+                    <DropdownMenuContent
+                      className="mx-2 w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                      side={"bottom"}
+                      align="end"
+                      sideOffset={4}
+                    >
+                      <DropdownMenuGroup>
+                        <Link
+                          href={`/${pathname}/dashboard` as AppRoute}
+                          className="flex items-center gap-2"
+                        >
+                          <DropdownMenuItem className="focus:bg-primary focus:text-secondary w-full cursor-pointer">
+                            <HouseHeart />
+                            <span>Home</span>
+                          </DropdownMenuItem>
+                        </Link>
+                        <Link
+                          href={`/${pathname}/settings` as AppRoute}
+                          className="flex items-center gap-2"
+                        >
+                          <DropdownMenuItem className="focus:bg-primary focus:text-secondary w-full cursor-pointer">
+                            <UserRoundPen />
+                            <span>Profile</span>
+                          </DropdownMenuItem>
+                        </Link>
+                        <Link
+                          href={`/${pathname}/settings` as AppRoute}
+                          className="flex items-center gap-2"
+                        >
+                          <DropdownMenuItem className="focus:bg-primary focus:text-secondary w-full cursor-pointer">
+                            <Headset />
+                            <span>Customer support</span>
+                          </DropdownMenuItem>
+                        </Link>
+                      </DropdownMenuGroup>
+
+                      <DropdownMenuSeparator />
+
+                      <DropdownMenuGroup>
+                        <DropdownMenuItem
+                          className="focus:bg-primary focus:text-secondary cursor-pointer"
+                          onClick={handleToggleTheme}
+                        >
+                          <Moon />
+                          Toggle Theme
+                        </DropdownMenuItem>
+
+                        <DropdownMenuItem
+                          onClick={handleLogout}
+                          className="focus:bg-primary focus:text-secondary cursor-pointer"
+                        >
+                          <LogOut />
+                          Log out
+                        </DropdownMenuItem>
+
+                        {/* Open Delete Dialog */}
+                        <DropdownMenuItem
+                          onClick={() => setOpen(true)}
+                          className="focus:bg-destructive hover:text-secondary focus:text-secondary cursor-pointer"
+                        >
+                          <Trash />
+                          Delete Account
+                        </DropdownMenuItem>
+                      </DropdownMenuGroup>
+
+                      <DropdownMenuSeparator />
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </div>
+          </div>
+        </div>
       </div>
     </header>
   );
