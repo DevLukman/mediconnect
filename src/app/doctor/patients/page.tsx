@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <section className="mt-8">
+    <section className="mt-18 px-5 pb-2 md:mt-8 md:px-8">
       <div>
         <div>
           <h1 className="mb-2 text-xl font-semibold">Patients</h1>

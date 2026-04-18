@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default async function Page() {
   const session = await getUserSession();
   return (
-    <section className="mt-8 px-8 pb-2">
+    <section className="mt-18 px-5 pb-10 md:mt-8 md:px-8">
       <div>
         <h1 className="text-lg font-semibold md:text-xl">
           Welcome back, {session?.user.name}

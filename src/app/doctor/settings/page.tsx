@@ -17,7 +17,7 @@ export default async function Page() {
     console.error("Failed to load doctor profile:", error);
   }
   return (
-    <section className="mt-8">
+    <section className="mt-18 px-5 pb-2 md:mt-8 md:px-8">
       <div className="w-full">
         <h1 className="text-2xl font-bold">Settings</h1>
         <p className="text-muted-foreground mt-2 text-sm font-normal">

@@ -20,7 +20,7 @@ export default async function RootLayout({
     <SidebarProvider>
       <PatientDashboardSidebar username={username} image={image} />
       <SidebarInset>
-        <DashboardHeader />
+        <DashboardHeader username={username} image={image} />
         <main>{children}</main>
       </SidebarInset>
     </SidebarProvider>

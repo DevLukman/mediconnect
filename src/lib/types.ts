@@ -108,11 +108,11 @@ export const DoctorBookings = z.object({
   reasonForVisit: z.string("Reason for visit is required").max(200),
 });
 export const PatientBookings = z.object({
-  doctorId: z.string("Patient ID is required").max(20),
+  doctorId: z.string("Patient ID is required"),
   appointmentDate: z.string("Appointment date is required"),
   appointmentTime: z.string("Appointment time is required"),
   appointmentDuration: z.string("Duration is required"),
-  reasonForVisit: z.string("Reason for visit is required").max(200),
+  reasonForVisit: z.string("Reason for visit is required").max(400),
 });
 
 // TypeScript types derived from Zod schemas
